@@ -51,8 +51,6 @@ img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
 
-/* UTILITY */
-
 .badge{
   display:inline-block;
   font-size:11px;
@@ -195,9 +193,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   scrollbar-width:none
 }
 
-.weather-strip-inner::-webkit-scrollbar{
-  display:none
-}
+.weather-strip-inner::-webkit-scrollbar{display:none}
 
 .weather-city{
   display:flex;
@@ -208,9 +204,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   border-right:1px solid rgba(255,255,255,.12)
 }
 
-.weather-city:last-child{
-  border-right:none
-}
+.weather-city:last-child{border-right:none}
 
 .weather-icon{
   font-size:18px;
@@ -218,9 +212,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   text-align:center
 }
 
-.weather-info{
-  line-height:1.2
-}
+.weather-info{line-height:1.2}
 
 .weather-name{
   font-size:11px;
@@ -293,9 +285,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   line-height:1
 }
 
-.brand-name span{
-  color:var(--cyan)
-}
+.brand-name span{color:var(--cyan)}
 
 .brand-tagline{
   font-size:11px;
@@ -330,9 +320,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   width:150px
 }
 
-.search-bar input::placeholder{
-  color:rgba(255,255,255,.4)
-}
+.search-bar input::placeholder{color:rgba(255,255,255,.4)}
 
 /* NAV */
 
@@ -352,9 +340,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   scrollbar-width:none
 }
 
-.nav-inner::-webkit-scrollbar{
-  display:none
-}
+.nav-inner::-webkit-scrollbar{display:none}
 
 .nav-item{
   flex-shrink:0;
@@ -378,7 +364,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   border-bottom-color:var(--cyan)
 }
 
-/* ADMIN BANNER */
+/* ADMIN */
 
 .admin-mode-banner{
   background:var(--cyan);
@@ -390,9 +376,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   display:none
 }
 
-.admin-mode-banner.visible{
-  display:block
-}
+.admin-mode-banner.visible{display:block}
 
 /* HERO */
 
@@ -444,9 +428,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   background:linear-gradient(to top,rgba(11,61,107,.97) 40%,transparent)
 }
 
-.hero-main-content .badge{
-  margin-bottom:10px
-}
+.hero-main-content .badge{margin-bottom:10px}
 
 .hero-main-content h2{
   font-family:var(--font-serif);
@@ -486,9 +468,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   transition:background var(--tr)
 }
 
-.hero-side:hover{
-  background:var(--ice)
-}
+.hero-side:hover{background:var(--ice)}
 
 .hero-side .badge{
   margin-bottom:8px;
@@ -599,9 +579,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   transition:transform .35s ease
 }
 
-.article-card:hover .card-image img{
-  transform:scale(1.06)
-}
+.article-card:hover .card-image img{transform:scale(1.06)}
 
 .card-image-placeholder{
   width:100%;
@@ -735,13 +713,8 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   transition:opacity var(--tr)
 }
 
-.trending-item:last-child{
-  border-bottom:none
-}
-
-.trending-item:hover{
-  opacity:.72
-}
+.trending-item:last-child{border-bottom:none}
+.trending-item:hover{opacity:.72}
 
 .trending-num{
   font-size:24px;
@@ -845,9 +818,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
   animation:readerIn .22s ease
 }
 
-.reader-section.open{
-  display:block
-}
+.reader-section.open{display:block}
 
 @keyframes readerIn{
   from{opacity:0;transform:translateY(10px)}
@@ -855,9 +826,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
 }
 
 main.reader-open>#heroSection,
-main.reader-open>.content-wrapper{
-  display:none
-}
+main.reader-open>.content-wrapper{display:none}
 
 .reader-breadcrumb{
   background:var(--sky);
@@ -881,9 +850,7 @@ main.reader-open>.content-wrapper{
   transition:color var(--tr)
 }
 
-.reader-breadcrumb button:hover{
-  color:var(--cyan)
-}
+.reader-breadcrumb button:hover{color:var(--cyan)}
 
 .reader-breadcrumb .crumb-sep{
   color:rgba(255,255,255,.3)
@@ -942,12 +909,48 @@ main.reader-open>.content-wrapper{
   font-size:18px;
   line-height:1.78;
   color:var(--text);
-  font-family:Georgia, 'Times New Roman', serif;
+  font-family:Georgia,'Times New Roman',serif;
 }
 
-.reader-body p{
-  margin-bottom:1.4em
+.reader-body p{margin-bottom:1.4em}
+
+/* GALERIJA */
+
+.reader-gallery{
+  margin-top:44px;
+  padding-top:28px;
+  border-top:1px solid var(--border)
 }
+
+.reader-gallery-title{
+  font-family:var(--font-serif);
+  font-size:22px;
+  font-weight:700;
+  color:var(--sky);
+  margin-bottom:18px
+}
+
+.reader-gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px
+}
+
+.reader-gallery-item{
+  overflow:hidden;
+  border-radius:var(--radius);
+  background:var(--ice);
+  box-shadow:var(--shadow)
+}
+
+.reader-gallery-item img{
+  width:100%;
+  height:300px;
+  object-fit:cover;
+  transition:transform .35s ease
+}
+
+.reader-gallery-item:hover img{transform:scale(1.03)}
 
 .reader-admin{
   display:flex;
@@ -992,9 +995,7 @@ main.reader-open>.content-wrapper{
   border-top:4px solid var(--cyan)
 }
 
-.modal-overlay.open .modal{
-  transform:translateY(0)
-}
+.modal-overlay.open .modal{transform:translateY(0)}
 
 .modal-header{
   padding:24px 28px 18px;
@@ -1030,9 +1031,7 @@ main.reader-open>.content-wrapper{
   color:var(--storm)
 }
 
-.modal-body{
-  padding:24px 28px
-}
+.modal-body{padding:24px 28px}
 
 .modal-footer{
   padding:18px 28px 24px;
@@ -1043,9 +1042,7 @@ main.reader-open>.content-wrapper{
   background:var(--ice)
 }
 
-.form-group{
-  margin-bottom:18px
-}
+.form-group{margin-bottom:18px}
 
 .form-group label{
   display:block;
@@ -1098,9 +1095,7 @@ main.reader-open>.content-wrapper{
   font-style:italic
 }
 
-.settings-section{
-  margin-bottom:28px
-}
+.settings-section{margin-bottom:28px}
 
 .settings-section h4{
   font-size:14px;
@@ -1156,9 +1151,7 @@ main.reader-open>.content-wrapper{
   pointer-events:all
 }
 
-.toast.show{
-  transform:translateX(0)
-}
+.toast.show{transform:translateX(0)}
 
 .toast.success::before{
   content:'✓';
@@ -1221,132 +1214,78 @@ main.reader-open>.content-wrapper{
   margin-bottom:6px
 }
 
-.footer-logo span{
-  color:var(--cyan)
-}
+.footer-logo span{color:var(--cyan)}
 
-.footer-text{
-  font-size:13px
-}
+.footer-text{font-size:13px}
 
 /* RESPONSIVE */
 
 @media(max-width:900px){
 
-  .hero-grid{
-    grid-template-columns:1fr
-  }
+  .hero-grid{grid-template-columns:1fr}
 
-  .hero-main{
-    min-height:300px
-  }
+  .hero-main{min-height:300px}
 
-  .hero-side{
-    display:none
-  }
+  .hero-side{display:none}
 
-  .content-wrapper{
-    grid-template-columns:1fr
-  }
+  .content-wrapper{grid-template-columns:1fr}
 
-  .sidebar{
-    display:none
-  }
+  .sidebar{display:none}
 
-  .form-row{
-    grid-template-columns:1fr
-  }
+  .form-row{grid-template-columns:1fr}
 
-  /*
-    NAMERNO:
-    vremenska vrstica ostane vidna tudi na telefonu.
-    Prej je bila tukaj skrita skupaj z iskanjem.
-  */
-  .search-bar{
-    display:none
-  }
+  .search-bar{display:none}
 
   .weather-strip-inner{
     padding:0 12px;
     gap:8px
   }
 
-  .weather-city{
-    padding:2px 10px
-  }
+  .weather-city{padding:2px 10px}
 
-  .weather-update{
-    display:none
-  }
+  .weather-update{display:none}
 
-  .brand-name{
-    font-size:22px
-  }
+  .brand-name{font-size:22px}
 }
 
 @media(max-width:600px){
 
-  .header-brand{
-    height:58px
-  }
+  .header-brand{height:58px}
 
-  .brand-icon{
-    font-size:28px
-  }
+  .brand-icon{font-size:28px}
 
-  .hero-section{
-    padding:14px 12px 0
-  }
+  .hero-section{padding:14px 12px 0}
 
-  .content-wrapper{
-    padding:16px 12px 40px
-  }
+  .content-wrapper{padding:16px 12px 40px}
 
-  .articles-grid{
-    grid-template-columns:1fr
-  }
+  .articles-grid{grid-template-columns:1fr}
 
   .modal-overlay{
     padding:0;
     align-items:flex-end
   }
 
-  .modal{
-    border-radius:10px 10px 0 0
-  }
+  .modal{border-radius:10px 10px 0 0}
 
-  .weather-strip{
-    padding:6px 0
-  }
+  .weather-strip{padding:6px 0}
 
-  .weather-strip-inner{
-    gap:4px
-  }
+  .weather-strip-inner{gap:4px}
 
-  .weather-city{
-    padding:2px 8px
-  }
+  .weather-city{padding:2px 8px}
 
-  .weather-icon{
-    font-size:16px
-  }
+  .weather-icon{font-size:16px}
 
-  .weather-name{
-    font-size:10px
-  }
+  .weather-name{font-size:10px}
 
-  .weather-temp{
-    font-size:14px
-  }
+  .weather-temp{font-size:14px}
 
-  .weather-desc{
-    font-size:9px
-  }
+  .weather-desc{font-size:9px}
 
- .reader-image{
-  height:280px;
-}
-  
+  .reader-image{height:280px}
+
+  .reader-gallery-grid{grid-template-columns:1fr}
+
+  .reader-gallery-item img{height:280px}
 }
 
 @keyframes spin{
@@ -1360,10 +1299,8 @@ main.reader-open>.content-wrapper{
 <div class="toast-container" id="toastContainer"></div>
 
 <div class="admin-mode-banner" id="adminBanner">
-  ⛅ Urednički način — prijavljeni ste kot administrator
+  ⛅ Uredniški način — prijavljeni ste kot administrator
 </div>
-
-<!-- TOPBAR -->
 
 <div class="topbar">
   <div class="topbar-inner">
@@ -1383,16 +1320,13 @@ main.reader-open>.content-wrapper{
   </div>
 </div>
 
-<!-- WEATHER STRIP -->
-
 <div class="weather-strip">
 
   <div class="weather-strip-inner" id="weatherStrip">
 
-    <!-- JavaScript bo sem vstavil aktualne vreme -->
-
     <div class="weather-city">
       <span class="weather-icon">🌦️</span>
+
       <div class="weather-info">
         <div class="weather-name">Nalaganje vremena…</div>
         <div class="weather-temp">—°C</div>
@@ -1407,8 +1341,6 @@ main.reader-open>.content-wrapper{
   </div>
 
 </div>
-
-<!-- HEADER -->
 
 <header class="site-header">
 
@@ -1474,8 +1406,6 @@ main.reader-open>.content-wrapper{
     </div>
 
   </div>
-
-  <!-- NAV -->
 
   <nav class="site-nav">
 
@@ -1546,8 +1476,6 @@ main.reader-open>.content-wrapper{
 
   </div>
 
-  <!-- READER INLINE -->
-
   <section
     class="reader-section"
     id="readerSection"
@@ -1581,8 +1509,6 @@ main.reader-open>.content-wrapper{
 
 </main>
 
-<!-- FOOTER -->
-
 <footer class="site-footer">
 
   <div class="footer-inner">
@@ -1602,7 +1528,7 @@ main.reader-open>.content-wrapper{
 
 </footer>
 
-<!-- EDITOR MODAL -->
+<!-- EDITOR -->
 
 <div
   class="modal-overlay"
@@ -1693,9 +1619,11 @@ main.reader-open>.content-wrapper{
 
       </div>
 
+      <!-- GLAVNA FOTOGRAFIJA -->
+
       <div class="form-group">
 
-        <label>URL slike</label>
+        <label>Glavna fotografija</label>
 
         <input
           type="url"
@@ -1704,7 +1632,33 @@ main.reader-open>.content-wrapper{
         >
 
         <div class="form-hint">
-          Priporočeno: 1200 × 630 px
+          Fotografija, ki se prikaže na vrhu članka. Priporočeno: 1200 × 630 px.
+        </div>
+
+      </div>
+
+      <!-- DODATNE FOTOGRAFIJE -->
+
+      <div class="form-group">
+
+        <label>Dodatne fotografije</label>
+
+        <div
+          id="articleImages"
+          style="display:flex;flex-direction:column;gap:10px"
+        ></div>
+
+        <button
+          type="button"
+          class="btn btn-outline btn-sm"
+          onclick="addArticleImageField()"
+          style="margin-top:10px"
+        >
+          + Dodaj fotografijo
+        </button>
+
+        <div class="form-hint">
+          Fotografije bodo prikazane v galeriji na koncu članka.
         </div>
 
       </div>
@@ -1734,7 +1688,7 @@ main.reader-open>.content-wrapper{
 
 </div>
 
-<!-- SETTINGS MODAL -->
+<!-- SETTINGS -->
 
 <div
   class="modal-overlay"
@@ -1923,7 +1877,7 @@ main.reader-open>.content-wrapper{
 
 </div>
 
-<!-- LOGIN MODAL -->
+<!-- LOGIN -->
 
 <div
   class="modal-overlay"
@@ -1993,7 +1947,7 @@ main.reader-open>.content-wrapper{
 
 </div>
 
-<!-- CONFIRM DELETE -->
+<!-- DELETE -->
 
 <div
   class="modal-overlay"
@@ -2055,11 +2009,11 @@ main.reader-open>.content-wrapper{
    GLAVNO STANJE
 ============================================================ */
 
-let STATE = {
+let STATE={
 
-  articles: [],
+  articles:[],
 
-  categories: [
+  categories:[
     'Vreme v Sloveniji',
     'Napovedi',
     'Podnebne spremembe',
@@ -2069,7 +2023,7 @@ let STATE = {
     'Meteorološka znanost'
   ],
 
-  settings: {
+  settings:{
     ghToken:'',
     ghOwner:'',
     ghRepo:'',
@@ -2079,19 +2033,17 @@ let STATE = {
   },
 
   isAdmin:false,
-
   currentCategory:'vse',
-
   weather:[]
 
 };
 
 
 /* ============================================================
-   MESTA ZA VREME
+   VREME
 ============================================================ */
 
-const WEATHER_CITIES = [
+const WEATHER_CITIES=[
 
   {
     name:'Ljubljana',
@@ -2137,19 +2089,14 @@ const WEATHER_CITIES = [
 
 ];
 
-
-/* ============================================================
-   OSVEŽEVANJE VREMENA
-============================================================ */
-
-const WEATHER_REFRESH_MS = 10 * 60 * 1000;
+const WEATHER_REFRESH_MS=10*60*1000;
 
 
 /* ============================================================
    IKONE RUBRIK
 ============================================================ */
 
-const CAT_ICONS = {
+const CAT_ICONS={
 
   'Vreme v Sloveniji':'🇸🇮',
   'Napovedi':'📅',
@@ -2168,119 +2115,30 @@ function catIcon(c){
 
 
 /* ============================================================
-   WMO VREMENSKE KODE
+   WMO
 ============================================================ */
 
 function getWeatherInfo(code){
 
   code=Number(code);
 
-  if(code===0){
-    return {
-      icon:'☀️',
-      description:'Sončno'
-    };
-  }
+  if(code===0)return{icon:'☀️',description:'Sončno'};
+  if(code===1)return{icon:'🌤️',description:'Pretežno jasno'};
+  if(code===2)return{icon:'⛅',description:'Delno oblačno'};
+  if(code===3)return{icon:'☁️',description:'Oblačno'};
+  if(code===45||code===48)return{icon:'🌫️',description:'Megla'};
+  if(code===51||code===53||code===55)return{icon:'🌦️',description:'Rosenje'};
+  if(code===56||code===57)return{icon:'🌧️',description:'Zmrzujoče rosenje'};
+  if(code===61||code===63||code===65)return{icon:'🌧️',description:'Dež'};
+  if(code===66||code===67)return{icon:'🌧️',description:'Zmrzujoč dež'};
+  if(code===71||code===73||code===75)return{icon:'🌨️',description:'Sneženje'};
+  if(code===77)return{icon:'❄️',description:'Snežna zrna'};
+  if(code===80||code===81||code===82)return{icon:'🌦️',description:'Dežne plohe'};
+  if(code===85||code===86)return{icon:'🌨️',description:'Snežne plohe'};
+  if(code===95)return{icon:'⛈️',description:'Nevihta'};
+  if(code===96||code===99)return{icon:'⛈️',description:'Nevihta s točo'};
 
-  if(code===1){
-    return {
-      icon:'🌤️',
-      description:'Pretežno jasno'
-    };
-  }
-
-  if(code===2){
-    return {
-      icon:'⛅',
-      description:'Delno oblačno'
-    };
-  }
-
-  if(code===3){
-    return {
-      icon:'☁️',
-      description:'Oblačno'
-    };
-  }
-
-  if(code===45 || code===48){
-    return {
-      icon:'🌫️',
-      description:'Megla'
-    };
-  }
-
-  if(code===51 || code===53 || code===55){
-    return {
-      icon:'🌦️',
-      description:'Rosenje'
-    };
-  }
-
-  if(code===56 || code===57){
-    return {
-      icon:'🌧️',
-      description:'Zmrzujoče rosenje'
-    };
-  }
-
-  if(code===61 || code===63 || code===65){
-    return {
-      icon:'🌧️',
-      description:'Dež'
-    };
-  }
-
-  if(code===66 || code===67){
-    return {
-      icon:'🌧️',
-      description:'Zmrzujoč dež'
-    };
-  }
-
-  if(code===71 || code===73 || code===75){
-    return {
-      icon:'🌨️',
-      description:'Sneženje'
-    };
-  }
-
-  if(code===77){
-    return {
-      icon:'❄️',
-      description:'Snežna zrna'
-    };
-  }
-
-  if(code===80 || code===81 || code===82){
-    return {
-      icon:'🌦️',
-      description:'Dežne plohe'
-    };
-  }
-
-  if(code===85 || code===86){
-    return {
-      icon:'🌨️',
-      description:'Snežne plohe'
-    };
-  }
-
-  if(code===95){
-    return {
-      icon:'⛈️',
-      description:'Nevihta'
-    };
-  }
-
-  if(code===96 || code===99){
-    return {
-      icon:'⛈️',
-      description:'Nevihta s točo'
-    };
-  }
-
-  return {
+  return{
     icon:'🌦️',
     description:'Spremenljivo'
   };
@@ -2294,70 +2152,72 @@ function getWeatherInfo(code){
 
 function getWindDirection(degrees){
 
-  if(degrees===null || degrees===undefined || isNaN(degrees)){
+  if(
+    degrees===null||
+    degrees===undefined||
+    isNaN(degrees)
+  ){
     return '—';
   }
 
   const directions=[
-    'S',
-    'SV',
-    'V',
-    'JV',
-    'J',
-    'JZ',
-    'Z',
-    'SZ'
+    'S','SV','V','JV',
+    'J','JZ','Z','SZ'
   ];
 
-  const index=Math.round(Number(degrees)/45)%8;
-
-  return directions[index];
+  return directions[
+    Math.round(Number(degrees)/45)%8
+  ];
 
 }
 
 
 /* ============================================================
-   PRETVORBA VIDLJIVOSTI
+   VIDLJIVOST
 ============================================================ */
 
 function visibilityKm(value){
 
-  if(value===null || value===undefined || isNaN(value)){
+  if(
+    value===null||
+    value===undefined||
+    isNaN(value)
+  ){
     return '—';
   }
 
-  return (Number(value)/1000).toFixed(1);
+  return(
+    Number(value)/1000
+  ).toFixed(1);
 
 }
 
 
 /* ============================================================
-   PRIDOBI VREME ZA ENO MESTO
+   VREME ZA MESTO
 ============================================================ */
 
 async function fetchWeatherCity(city){
 
-  const url =
-    'https://api.open-meteo.com/v1/forecast' +
-    '?latitude=' + encodeURIComponent(city.lat) +
-    '&longitude=' + encodeURIComponent(city.lon) +
-    '&current=' +
-    'temperature_2m,' +
-    'relative_humidity_2m,' +
-    'weather_code,' +
-    'wind_speed_10m,' +
-    'wind_direction_10m,' +
-    'pressure_msl,' +
-    'visibility' +
-    '&temperature_unit=celsius' +
-    '&wind_speed_unit=kmh' +
+  const url=
+    'https://api.open-meteo.com/v1/forecast'+
+    '?latitude='+encodeURIComponent(city.lat)+
+    '&longitude='+encodeURIComponent(city.lon)+
+    '&current='+
+    'temperature_2m,'+
+    'relative_humidity_2m,'+
+    'weather_code,'+
+    'wind_speed_10m,'+
+    'wind_direction_10m,'+
+    'pressure_msl,'+
+    'visibility'+
+    '&temperature_unit=celsius'+
+    '&wind_speed_unit=kmh'+
     '&timezone=Europe%2FLjubljana';
 
   const response=await fetch(
     url,
-    {
-      cache:'no-store'
-    }
+    {cache:'no-store'}
   );
 
   if(!response.ok){
@@ -2375,30 +2235,44 @@ async function fetchWeatherCity(city){
   }
 
   const current=data.current;
-  const info=getWeatherInfo(current.weather_code);
+  const info=getWeatherInfo(
+    current.weather_code
+  );
 
-  return {
+  return{
 
     name:city.name,
 
-    temperature:Number(current.temperature_2m),
+    temperature:Number(
+      current.temperature_2m
+    ),
 
-    humidity:Number(current.relative_humidity_2m),
+    humidity:Number(
+      current.relative_humidity_2m
+    ),
 
-    weatherCode:Number(current.weather_code),
+    weatherCode:Number(
+      current.weather_code
+    ),
 
-    wind:Number(current.wind_speed_10m),
+    wind:Number(
+      current.wind_speed_10m
+    ),
 
-    windDirection:Number(current.wind_direction_10m),
+    windDirection:Number(
+      current.wind_direction_10m
+    ),
 
-    pressure:Number(current.pressure_msl),
+    pressure:Number(
+      current.pressure_msl
+    ),
 
-    visibility:Number(current.visibility),
+    visibility:Number(
+      current.visibility
+    ),
 
     icon:info.icon,
-
     description:info.description,
-
     time:current.time
 
   };
@@ -2407,12 +2281,15 @@ async function fetchWeatherCity(city){
 
 
 /* ============================================================
-   GLAVNA FUNKCIJA ZA VREME
+   NALOŽI VREME
 ============================================================ */
 
 async function loadWeather(){
 
-  const updateEl=document.getElementById('weatherUpdate');
+  const updateEl=
+    document.getElementById(
+      'weatherUpdate'
+    );
 
   if(updateEl){
     updateEl.textContent='Posodabljam…';
@@ -2421,11 +2298,9 @@ async function loadWeather(){
   try{
 
     const results=await Promise.all(
-
-      WEATHER_CITIES.map(city=>
-        fetchWeatherCity(city)
+      WEATHER_CITIES.map(
+        city=>fetchWeatherCity(city)
       )
-
     );
 
     STATE.weather=results;
@@ -2438,15 +2313,14 @@ async function loadWeather(){
       )
     );
 
-    const now=new Date();
-
-    const time=now.toLocaleTimeString(
-      'sl-SI',
-      {
-        hour:'2-digit',
-        minute:'2-digit'
-      }
-    );
+    const time=
+      new Date().toLocaleTimeString(
+        'sl-SI',
+        {
+          hour:'2-digit',
+          minute:'2-digit'
+        }
+      );
 
     if(updateEl){
       updateEl.textContent=
@@ -2459,11 +2333,6 @@ async function loadWeather(){
       'Napaka pri pridobivanju vremena:',
       error
     );
-
-    /*
-      Če imamo stare podatke, jih pustimo prikazane.
-      Tako stran ne bo nenadoma pokazala praznih vrednosti.
-    */
 
     if(STATE.weather.length){
 
@@ -2494,26 +2363,24 @@ async function loadWeather(){
 
 
 /* ============================================================
-   IZPIS VREMENSKE VRSTICE
+   VREMENSKA VRSTICA
 ============================================================ */
 
 function renderWeatherStrip(weather){
 
-  const strip=document.getElementById(
-    'weatherStrip'
-  );
+  const strip=
+    document.getElementById(
+      'weatherStrip'
+    );
 
-  if(!strip){
-    return;
-  }
+  if(!strip)return;
 
   strip.innerHTML='';
 
   weather.forEach(w=>{
 
-    const city=document.createElement(
-      'div'
-    );
+    const city=
+      document.createElement('div');
 
     city.className='weather-city';
 
@@ -2545,16 +2412,12 @@ function renderWeatherStrip(weather){
 
   });
 
-  const update=document.createElement(
-    'div'
-  );
+  const update=
+    document.createElement('div');
 
   update.className='weather-update';
-
   update.id='weatherUpdate';
-
-  update.textContent=
-    'Posodobljeno';
+  update.textContent='Posodobljeno';
 
   strip.appendChild(update);
 
@@ -2562,18 +2425,17 @@ function renderWeatherStrip(weather){
 
 
 /* ============================================================
-   NAPAKA PRI VREMENU
+   NAPAKA VREME
 ============================================================ */
 
 function renderWeatherError(){
 
-  const strip=document.getElementById(
-    'weatherStrip'
-  );
+  const strip=
+    document.getElementById(
+      'weatherStrip'
+    );
 
-  if(!strip){
-    return;
-  }
+  if(!strip)return;
 
   strip.innerHTML=`
 
@@ -2614,50 +2476,57 @@ function renderWeatherError(){
 
 
 /* ============================================================
-   POSODOBI SIDEBAR VREME
+   SIDEBAR VREME
 ============================================================ */
 
 function updateSidebarWeather(weather){
 
-  if(!weather){
-    return;
-  }
+  if(!weather)return;
 
-  const temp=document.getElementById(
-    'sidebarTemp'
-  );
+  const temp=
+    document.getElementById(
+      'sidebarTemp'
+    );
 
-  const desc=document.getElementById(
-    'sidebarDesc'
-  );
+  const desc=
+    document.getElementById(
+      'sidebarDesc'
+    );
 
-  const humidity=document.getElementById(
-    'sidebarHumidity'
-  );
+  const humidity=
+    document.getElementById(
+      'sidebarHumidity'
+    );
 
-  const wind=document.getElementById(
-    'sidebarWind'
-  );
+  const wind=
+    document.getElementById(
+      'sidebarWind'
+    );
 
-  const pressure=document.getElementById(
-    'sidebarPressure'
-  );
+  const pressure=
+    document.getElementById(
+      'sidebarPressure'
+    );
 
-  const visibility=document.getElementById(
-    'sidebarVisibility'
-  );
+  const visibility=
+    document.getElementById(
+      'sidebarVisibility'
+    );
 
-  const windDirection=document.getElementById(
-    'sidebarWindDirection'
-  );
+  const windDirection=
+    document.getElementById(
+      'sidebarWindDirection'
+    );
 
-  const icon=document.getElementById(
-    'sidebarWeatherIcon'
-  );
+  const icon=
+    document.getElementById(
+      'sidebarWeatherIcon'
+    );
 
-  const lastUpdate=document.getElementById(
-    'sidebarLastUpdate'
-  );
+  const lastUpdate=
+    document.getElementById(
+      'sidebarLastUpdate'
+    );
 
   if(temp){
     temp.innerHTML=
@@ -2671,8 +2540,7 @@ function updateSidebarWeather(weather){
   }
 
   if(icon){
-    icon.textContent=
-      weather.icon;
+    icon.textContent=weather.icon;
   }
 
   if(humidity){
@@ -2704,11 +2572,9 @@ function updateSidebarWeather(weather){
 
   if(lastUpdate){
 
-    const now=new Date();
-
     lastUpdate.textContent=
       'Podatki posodobljeni ob '+
-      now.toLocaleTimeString(
+      new Date().toLocaleTimeString(
         'sl-SI',
         {
           hour:'2-digit',
@@ -2739,14 +2605,8 @@ document.addEventListener(
 
     setupSearch();
 
-    /*
-      Takoj pridobi trenutno vreme.
-    */
     loadWeather();
 
-    /*
-      Nato ga samodejno osvežuj vsakih 10 minut.
-    */
     setInterval(
       loadWeather,
       WEATHER_REFRESH_MS
@@ -2787,9 +2647,7 @@ document.addEventListener(
           e=>{
 
             if(e.target===el){
-              el.classList.remove(
-                'open'
-              );
+              el.classList.remove('open');
             }
 
           }
@@ -2901,7 +2759,6 @@ function setDate(){
   document.getElementById(
     'currentDate'
   ).textContent=
-
     new Date().toLocaleDateString(
       'sl-SI',
       {
@@ -2945,9 +2802,7 @@ function renderNav(){
   STATE.categories.forEach(cat=>{
 
     const d=
-      document.createElement(
-        'div'
-      );
+      document.createElement('div');
 
     d.className=
       'nav-item'+
@@ -2979,7 +2834,7 @@ function renderNav(){
 
 
 /* ============================================================
-   FILTRIRANJE RUBRIK
+   FILTRIRANJE
 ============================================================ */
 
 function filterCategory(cat,el){
@@ -3059,7 +2914,7 @@ function filterCategory(cat,el){
 
 async function loadArticles(){
 
-  const {
+  const{
     ghOwner,
     ghRepo,
     ghFilePath,
@@ -3067,17 +2922,11 @@ async function loadArticles(){
     ghToken
   }=STATE.settings;
 
-  /*
-    Najprej poskusimo articles.json lokalno.
-  */
-
   try{
 
     const r=await fetch(
       ghFilePath||'articles.json',
-      {
-        cache:'no-store'
-      }
+      {cache:'no-store'}
     );
 
     if(r.ok){
@@ -3090,9 +2939,7 @@ async function loadArticles(){
       saveLocalState();
 
       renderHero();
-
       renderArticles();
-
       renderSidebar();
 
       return;
@@ -3100,11 +2947,6 @@ async function loadArticles(){
     }
 
   }catch(e){}
-
-
-  /*
-    Nato GitHub raw.
-  */
 
   if(
     ghOwner &&
@@ -3128,9 +2970,7 @@ async function loadArticles(){
         saveLocalState();
 
         renderHero();
-
         renderArticles();
-
         renderSidebar();
 
         return;
@@ -3140,12 +2980,6 @@ async function loadArticles(){
     }catch(e){}
 
   }
-
-
-  /*
-    Zadnja možnost:
-    GitHub API z žetonom.
-  */
 
   if(
     ghOwner &&
@@ -3157,9 +2991,7 @@ async function loadArticles(){
     try{
 
       const r=await fetch(
-
         `https://api.github.com/repos/${ghOwner}/${ghRepo}/contents/${ghFilePath}?ref=${ghBranch||'main'}`,
-
         {
           headers:{
             Authorization:
@@ -3168,7 +3000,6 @@ async function loadArticles(){
               'application/vnd.github.v3+json'
           }
         }
-
       );
 
       if(r.ok){
@@ -3194,9 +3025,7 @@ async function loadArticles(){
   }
 
   renderHero();
-
   renderArticles();
-
   renderSidebar();
 
 }
@@ -3214,13 +3043,11 @@ async function refreshArticles(){
     );
 
   btn.textContent='↺ …';
-
   btn.disabled=true;
 
   await loadArticles();
 
   btn.textContent='↺ Osveži';
-
   btn.disabled=false;
 
   toast(
@@ -3232,12 +3059,12 @@ async function refreshArticles(){
 
 
 /* ============================================================
-   SHRANI NA GITHUB
+   GITHUB
 ============================================================ */
 
 async function saveToGitHub(){
 
-  const {
+  const{
     ghToken,
     ghOwner,
     ghRepo,
@@ -3246,8 +3073,8 @@ async function saveToGitHub(){
   }=STATE.settings;
 
   if(
-    !ghToken ||
-    !ghOwner ||
+    !ghToken||
+    !ghOwner||
     !ghRepo
   ){
     return false;
@@ -3258,9 +3085,7 @@ async function saveToGitHub(){
   try{
 
     const r=await fetch(
-
       `https://api.github.com/repos/${ghOwner}/${ghRepo}/contents/${ghFilePath}?ref=${ghBranch||'main'}`,
-
       {
         headers:{
           Authorization:
@@ -3269,13 +3094,11 @@ async function saveToGitHub(){
             'application/vnd.github.v3+json'
         }
       }
-
     );
 
     if(r.ok){
 
       const j=await r.json();
-
       sha=j.sha;
 
     }
@@ -3315,9 +3138,7 @@ async function saveToGitHub(){
   }
 
   const res=await fetch(
-
     `https://api.github.com/repos/${ghOwner}/${ghRepo}/contents/${ghFilePath}`,
-
     {
       method:'PUT',
 
@@ -3334,9 +3155,7 @@ async function saveToGitHub(){
 
       body:
         JSON.stringify(body)
-
     }
-
   );
 
   return res.ok;
@@ -3358,7 +3177,6 @@ function renderHero(){
   if(!STATE.articles.length){
 
     s.innerHTML='';
-
     return;
 
   }
@@ -3638,7 +3456,6 @@ function renderArticles(){
   }
 
   grid.innerHTML=
-
     arts.map(a=>`
 
       <div
@@ -3680,7 +3497,7 @@ function renderArticles(){
 
           <div class="card-excerpt">
             ${esc(
-              a.excerpt ||
+              a.excerpt||
               (a.content||'')
                 .substring(0,160)
             )}
@@ -3766,8 +3583,6 @@ function renderSidebar(){
       .slice(0,6);
 
   sb.innerHTML=`
-
-    <!-- VREME -->
 
     <div class="weather-widget">
 
@@ -3886,9 +3701,6 @@ function renderSidebar(){
 
     </div>
 
-
-    <!-- AKTUALNO -->
-
     <div class="sidebar-widget">
 
       <div class="widget-title">
@@ -3936,9 +3748,6 @@ function renderSidebar(){
       }
 
     </div>
-
-
-    <!-- RUBRIKE -->
 
     <div class="sidebar-widget">
 
@@ -3996,20 +3805,12 @@ function renderSidebar(){
 
   `;
 
-
-  /*
-    Če je vreme že naloženo,
-    ga takoj vpišemo v sidebar.
-  */
-
   if(STATE.weather.length){
 
     updateSidebarWeather(
-
       STATE.weather.find(
         w=>w.name==='Ljubljana'
       )
-
     );
 
   }
@@ -4070,9 +3871,7 @@ function openReader(id){
       x=>x.id===id
     );
 
-  if(!a){
-    return;
-  }
+  if(!a)return;
 
   const adminBtns=
     STATE.isAdmin
@@ -4157,6 +3956,49 @@ function openReader(id){
       ${formatContent(a.content||'')}
     </div>
 
+    ${
+      a.images && a.images.length
+
+      ?
+
+      `<div class="reader-gallery">
+
+        <div class="reader-gallery-title">
+          Fotogalerija
+        </div>
+
+        <div class="reader-gallery-grid">
+
+          ${
+            a.images
+              .filter(Boolean)
+              .map(
+                (image,index)=>`
+
+                  <div class="reader-gallery-item">
+
+                    <img
+                      src="${esc(image)}"
+                      alt="${esc(a.title)} — fotografija ${index+1}"
+                      loading="lazy"
+                    >
+
+                  </div>
+
+                `
+              )
+              .join('')
+          }
+
+        </div>
+
+      </div>`
+
+      :
+
+      ''
+    }
+
     ${adminBtns}
 
   `;
@@ -4207,14 +4049,78 @@ function closeReader(){
 
 
 /* ============================================================
-   UREDNIK ČLANKOV
+   DODAJ DODATNO FOTOGRAFIJO
+============================================================ */
+
+function addArticleImageField(value=''){
+
+  const container=
+    document.getElementById(
+      'articleImages'
+    );
+
+  const row=
+    document.createElement(
+      'div'
+    );
+
+  row.style.display='flex';
+  row.style.gap='8px';
+  row.style.alignItems='center';
+
+  row.innerHTML=`
+
+    <input
+      type="url"
+      class="article-extra-image"
+      placeholder="https://…"
+      value="${esc(value)}"
+      style="flex:1"
+    >
+
+    <button
+      type="button"
+      class="btn btn-danger btn-sm"
+      onclick="this.parentElement.remove()"
+      title="Odstrani fotografijo"
+    >
+      ✕
+    </button>
+
+  `;
+
+  container.appendChild(row);
+
+}
+
+
+/* ============================================================
+   PRIDOBI DODATNE FOTOGRAFIJE
+============================================================ */
+
+function getArticleImages(){
+
+  return[
+    ...document.querySelectorAll(
+      '.article-extra-image'
+    )
+  ]
+    .map(
+      input=>
+        input.value.trim()
+    )
+    .filter(Boolean);
+
+}
+
+
+/* ============================================================
+   UREDNIK
 ============================================================ */
 
 function openArticleEditor(id=null){
 
-  if(!STATE.isAdmin){
-    return;
-  }
+  if(!STATE.isAdmin)return;
 
   const sel=
     document.getElementById(
@@ -4238,9 +4144,7 @@ function openArticleEditor(id=null){
         x=>x.id===id
       );
 
-    if(!a){
-      return;
-    }
+    if(!a)return;
 
     document.getElementById(
       'editorTitle'
@@ -4275,6 +4179,20 @@ function openArticleEditor(id=null){
       'articleImage'
     ).value=a.image||'';
 
+    /* NALOŽI DODATNE FOTOGRAFIJE */
+
+    const imagesContainer=
+      document.getElementById(
+        'articleImages'
+      );
+
+    imagesContainer.innerHTML='';
+
+    (a.images||[]).forEach(
+      image=>
+        addArticleImageField(image)
+    );
+
     document.getElementById(
       'btnSaveArticle'
     ).textContent=
@@ -4301,6 +4219,12 @@ function openArticleEditor(id=null){
       i=>
         document.getElementById(i).value=''
     );
+
+    /* POČISTI DODATNE FOTOGRAFIJE */
+
+    document.getElementById(
+      'articleImages'
+    ).innerHTML='';
 
     document.getElementById(
       'btnSaveArticle'
@@ -4331,6 +4255,11 @@ async function saveArticle(){
     document.getElementById(
       'articleContent'
     ).value.trim();
+
+  /* PRIDOBI DODATNE FOTOGRAFIJE */
+
+  const images=
+    getArticleImages();
 
   if(!title){
 
@@ -4407,6 +4336,10 @@ async function saveArticle(){
         'articleImage'
       ).value.trim(),
 
+    /* DODATNE FOTOGRAFIJE */
+
+    images,
+
     date:
       editingId
 
@@ -4475,18 +4408,14 @@ async function saveArticle(){
 
 
   btn.disabled=false;
-
-  btn.innerHTML=
-    origText;
+  btn.innerHTML=origText;
 
   closeModal(
     'editorModal'
   );
 
   renderHero();
-
   renderArticles();
-
   renderSidebar();
 
   toast(
@@ -4505,7 +4434,7 @@ async function saveArticle(){
 
 
 /* ============================================================
-   BRISANJE ČLANKA
+   BRISANJE
 ============================================================ */
 
 function confirmDelete(id){
@@ -4536,9 +4465,7 @@ function confirmDelete(id){
       );
 
       renderHero();
-
       renderArticles();
-
       renderSidebar();
 
       toast(
@@ -4756,7 +4683,7 @@ function saveSettings(){
 
 
 /* ============================================================
-   SPREMEMBA GESLA
+   GESLO
 ============================================================ */
 
 function changePassword(){
@@ -4794,20 +4721,20 @@ function changePassword(){
 
 
 /* ============================================================
-   PREVERI GITHUB
+   GITHUB POVEZAVA
 ============================================================ */
 
 async function testConnection(){
 
-  const {
+  const{
     ghToken,
     ghOwner,
     ghRepo
   }=STATE.settings;
 
   if(
-    !ghToken ||
-    !ghOwner ||
+    !ghToken||
+    !ghOwner||
     !ghRepo
   ){
 
@@ -4823,16 +4750,13 @@ async function testConnection(){
   try{
 
     const r=await fetch(
-
       `https://api.github.com/repos/${ghOwner}/${ghRepo}`,
-
       {
         headers:{
           Authorization:
             `token ${ghToken}`
         }
       }
-
     );
 
     toast(
@@ -4907,7 +4831,7 @@ function addRubrika(){
     inp.value.trim();
 
   if(
-    !name ||
+    !name||
     STATE.categories.includes(name)
   ){
 
@@ -4920,16 +4844,13 @@ function addRubrika(){
 
   }
 
-  STATE.categories.push(
-    name
-  );
+  STATE.categories.push(name);
 
   saveLocalState();
 
   inp.value='';
 
   renderRubrikaList();
-
   renderNav();
 
   toast(
@@ -4953,7 +4874,6 @@ function deleteRubrika(i){
   saveLocalState();
 
   renderRubrikaList();
-
   renderNav();
 
   toast(
@@ -5047,18 +4967,14 @@ function toast(
     ()=>
       requestAnimationFrame(
         ()=>
-          t.classList.add(
-            'show'
-          )
+          t.classList.add('show')
       )
   );
 
   setTimeout(
     ()=>{
 
-      t.classList.remove(
-        'show'
-      );
+      t.classList.remove('show');
 
       setTimeout(
         ()=>t.remove(),
@@ -5073,32 +4989,17 @@ function toast(
 
 
 /* ============================================================
-   HTML ESCAPE
+   ESCAPE
 ============================================================ */
 
 function esc(s){
 
   return String(s||'')
-    .replace(
-      /&/g,
-      '&amp;'
-    )
-    .replace(
-      /</g,
-      '&lt;'
-    )
-    .replace(
-      />/g,
-      '&gt;'
-    )
-    .replace(
-      /"/g,
-      '&quot;'
-    )
-    .replace(
-      /'/g,
-      '&#39;'
-    );
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
 
 }
 
@@ -5130,14 +5031,12 @@ function cssEscape(value){
 
 
 /* ============================================================
-   DATUM ČLANKA
+   DATUM
 ============================================================ */
 
 function formatDate(iso){
 
-  if(!iso){
-    return '';
-  }
+  if(!iso)return '';
 
   return new Date(
     iso
@@ -5173,7 +5072,7 @@ function readTime(t){
 
 
 /* ============================================================
-   VSEBINA ČLANKA
+   VSEBINA
 ============================================================ */
 
 function formatContent(text){
