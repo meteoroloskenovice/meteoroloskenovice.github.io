@@ -3364,12 +3364,27 @@ function renderArticles(){
       .toLowerCase();
 
   let arts=
-    [...STATE.articles]
-      .sort(
-        (a,b)=>
-          new Date(b.date)-
-          new Date(a.date)
-      );
+  [...STATE.articles]
+    .sort(
+      (a,b)=>
+        new Date(b.date)-
+        new Date(a.date)
+    );
+
+// Glavni/najnovejši članek je že prikazan v HERO delu,
+// zato ga na seznamu "Najnovejše" ne prikažemo še enkrat.
+// Pri iskanju pa se še vedno lahko prikaže.
+const featured=arts[0];
+
+if(
+  STATE.currentCategory==='vse' &&
+  !q &&
+  featured
+){
+  arts=arts.filter(
+    a=>a.id!==featured.id
+  );
+}
 
   if(
     STATE.currentCategory!=='vse'
