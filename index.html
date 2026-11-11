@@ -2999,9 +2999,14 @@ function migrateArticles(){
 // Kje so članki na GitHubu. Nastavitve (žeton, repozitorij) so shranjene samo v brskalniku
 // računalnika, kjer je bil vnesen žeton. Na drugih računalnikih jih ni, zato se pri strani na
 // github.io lastnik in repozitorij prebereta iz naslova strani.
+// Če stran NE gostuje na github.io, sem vpiši svoj GitHub uporabniško ime in ime repozitorija
+// (npr. owner:'janez', repo:'meteo-novice'). Tako vsi obiskovalci in vsi računalniki
+// berejo sveže novice neposredno z GitHuba, tudi brez nastavitev v brskalniku.
+const GH_DEFAULT={owner:'',repo:'',branch:'main',path:'articles.json'};
+
 function getGhSource(){
   const st=STATE.settings||{};
-  let owner=st.ghOwner,repo=st.ghRepo;
+  let owner=st.ghOwner||GH_DEFAULT.owner,repo=st.ghRepo||GH_DEFAULT.repo;
   if((!owner||!repo)&&/\.github\.io$/i.test(location.hostname)){
     owner=location.hostname.split('.')[0];
     const seg=location.pathname.split('/').filter(Boolean)[0];
@@ -5160,21 +5165,67 @@ function saveEditorRange(){
   }
 }
 
+const BLOCK_TAGS=new Set(['P','DIV','H1','H2','H3','H4','UL','OL','LI','BLOCKQUOTE','TABLE','PRE']);
+
+// Besedilo, ki je neposredno v urejevalniku (brez odstavka), zavijemo v <p>,
+// da ga je mogoče pravilno razdeliti na mestu kurzorja.
+function wrapRootInline(ed){
+  let run=[];
+  const flush=()=>{
+    if(!run.length)return;
+    const meaningful=run.some(n=>n.nodeType===1||(n.textContent||'').trim());
+    if(meaningful){
+      const p=document.createElement('p');
+      run[0].before(p);
+      run.forEach(n=>p.appendChild(n));
+    }
+    run=[];
+  };
+  [...ed.childNodes].forEach(n=>{
+    const isBlock=n.nodeType===1&&(BLOCK_TAGS.has(n.tagName)||n.hasAttribute('data-yt'));
+    if(isBlock)flush();else run.push(n);
+  });
+  flush();
+}
+
+// Vrne mesto kurzorja, kjer naj se vstavi slika/video.
+// Pomembno: shranjeni položaj preberemo PREDEN urejevalnik znova dobi fokus,
+// ker brskalnik ob fokusu kurzor premakne na začetek.
 function restoreEditorRange(){
   const ed=document.getElementById('articleContentEditor');
+  const saved=(EDITOR_RANGE&&ed.contains(EDITOR_RANGE.commonAncestorContainer))
+    ?EDITOR_RANGE.cloneRange():null;
+
   ed.focus();
+
+  let range=saved;
+  if(!range){
+    range=document.createRange();
+    range.selectNodeContents(ed);
+    range.collapse(false);
+  }
+  range.collapse(false);
+
+  // prestavitev "golega" besedila v odstavke ob ohranitvi mesta kurzorja
+  let sc=range.startContainer,so=range.startOffset;
+  let anchorNode=null;
+  if(sc===ed)anchorNode=ed.childNodes[so]||null;
+  wrapRootInline(ed);
+  if(sc===ed){
+    if(anchorNode&&ed.contains(anchorNode)){
+      range.setStartBefore(anchorNode);
+    }else{
+      range.selectNodeContents(ed);
+      range.collapse(false);
+    }
+  }else{
+    range.setStart(sc,so);
+  }
+  range.collapse(true);
+
   const sel=window.getSelection();
   sel.removeAllRanges();
-  if(EDITOR_RANGE&&ed.contains(EDITOR_RANGE.commonAncestorContainer)){
-    sel.addRange(EDITOR_RANGE);
-  }else{
-    const r=document.createRange();
-    r.selectNodeContents(ed);
-    r.collapse(false);
-    sel.addRange(r);
-  }
-  const range=sel.getRangeAt(0);
-  range.collapse(false);
+  sel.addRange(range);
   return range;
 }
 
@@ -5294,9 +5345,6 @@ function insertYoutubeAtCursor(id){
     const hasContent=el=>el.textContent.trim()||el.querySelector('img');
     if(hasContent(tailBlock))div.after(tailBlock);
     if(!hasContent(block))block.remove();
-  }else if(block.nodeType===3){
-    const p=document.createElement('p');
-    block.after(div);
   }else{
     block.after(div);
   }
@@ -5327,7 +5375,7 @@ function setupEditorMedia(){
   if(!ed||ed.dataset.mediaReady)return;
   ed.dataset.mediaReady='1';
 
-  ['keyup','mouseup','input','focus'].forEach(ev=>ed.addEventListener(ev,saveEditorRange));
+  ['keyup','mouseup','input'].forEach(ev=>ed.addEventListener(ev,saveEditorRange));
   document.addEventListener('selectionchange',()=>{
     if(document.activeElement===ed)saveEditorRange();
   });
