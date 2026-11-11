@@ -2855,7 +2855,7 @@ function getArticleYear(article){
 }
 
 function getArchiveYears(){
-  const years=[...new Set(STATE.articles.map(getArticleYear).filter(y=>y!==null))];
+  const years=[...new Set(STATE.articles.map(getEffectiveYear))];
   const current=new Date().getFullYear();
   if(!years.includes(current))years.push(current);
   return years.sort((a,b)=>b-a);
@@ -2869,16 +2869,31 @@ function getCurrentYear(){
   return new Date().getFullYear();
 }
 
+// Članek brez veljavnega datuma obravnavamo kot članek tekočega leta,
+// da ne izgine iz prikaza.
+function getEffectiveYear(a){
+  const y=getArticleYear(a);
+  return y===null?getCurrentYear():y;
+}
+
+// Članki tekočega leta (prikazani pod "Najnovejše" in v rubrikah).
+function getCurrentYearArticles(){
+  const year=getCurrentYear();
+  return STATE.articles.filter(a=>getEffectiveYear(a)===year);
+}
+
+// Samodejni arhiv: ko je članek iz preteklega leta, ga rubrike ne prikazujejo več
+// (izgine iz rubrik in "Najnovejše") in je na voljo samo v rubriki z letnico.
+// Z novim letom se tako vse rubrike same "izpraznijo" za nove članke.
 function getArticlesForCategory(cat){
   if(cat==='vse'){
-    const year=getCurrentYear();
-    return STATE.articles.filter(a=>getArticleYear(a)===year);
+    return getCurrentYearArticles();
   }
   if(isArchiveCategory(cat)){
     const year=Number(cat);
-    return STATE.articles.filter(a=>getArticleYear(a)===year);
+    return STATE.articles.filter(a=>getEffectiveYear(a)===year);
   }
-  return STATE.articles.filter(a=>a.category===cat);
+  return getCurrentYearArticles().filter(a=>a.category===cat);
 }
 
 function renderNav(){
@@ -3223,13 +3238,6 @@ function renderHero(){
       'heroSection'
     );
 
-  if(!STATE.articles.length){
-
-    s.innerHTML='';
-    return;
-
-  }
-
   const sorted=
     getArticlesForCategory('vse')
       .sort(
@@ -3237,6 +3245,13 @@ function renderHero(){
           new Date(b.date)-
           new Date(a.date)
       );
+
+  if(!sorted.length){
+
+    s.innerHTML='';
+    return;
+
+  }
 
   const h=sorted[0];
   const h2=sorted[1];
@@ -3625,7 +3640,7 @@ function renderSidebar(){
     );
 
   const top=
-    [...STATE.articles]
+    [...getCurrentYearArticles()]
       .sort(
         (a,b)=>
           new Date(b.date)-
@@ -3810,7 +3825,7 @@ function renderSidebar(){
         STATE.categories.map(c=>{
 
           const cnt=
-            STATE.articles.filter(
+            getCurrentYearArticles().filter(
               a=>
                 a.category===c
             ).length;
