@@ -1530,24 +1530,7 @@ main.reader-open>.content-wrapper{display:none}
     id="readerSection"
   >
 
-    <div class="reader-breadcrumb">
-
-      <div class="reader-breadcrumb-inner">
-
-        <button onclick="closeReader()">
-          ← Nazaj na naslovnico
-        </button>
-
-        <span class="crumb-sep">›</span>
-
-        <span
-          class="crumb-cat"
-          id="readerCrumbCat"
-        ></span>
-
-      </div>
-
-    </div>
+    
 
     <div
       class="reader-content"
@@ -3952,7 +3935,7 @@ function openReader(id){
     ${adminBtns}
   `;
 
-  document.getElementById('readerCrumbCat').textContent=catIcon(a.category)+' '+a.category;
+  
   document.getElementById('readerSection').classList.add('open');
   document.querySelector('main').classList.add('reader-open');
   window.scrollTo({top:0,behavior:'smooth'});
