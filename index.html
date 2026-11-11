@@ -6,7 +6,7 @@
 <title>Meteorološke Novice</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -33,6 +33,7 @@
   --shadow-lg:0 8px 36px rgba(11,61,107,.18);
   --radius:6px;
   --font-serif:'Playfair Display',Georgia,serif;
+  --font-head:'Plus Jakarta Sans','Inter',system-ui,sans-serif;
   --font-sans:'Inter',system-ui,sans-serif;
   --tr:.18s ease;
 }
@@ -1291,6 +1292,71 @@ main.reader-open>.content-wrapper{display:none}
 @keyframes spin{
   to{transform:rotate(360deg)}
 }
+
+/* ===== NOVI NASLOVNI FONT ===== */
+.hero-main-content h2,.hero-side h3,.card-title,.reader-title{
+  font-family:var(--font-head);
+  letter-spacing:-.015em;
+  font-weight:800
+}
+.hero-side h3,.card-title{font-weight:700;letter-spacing:-.01em}
+.reader-title{line-height:1.15}
+
+/* ===== VSEBINA ČLANKA (bralnik + urejevalnik) ===== */
+[hidden]{display:none!important}
+.rt h2{font-family:var(--font-head);font-size:1.55em;font-weight:800;line-height:1.25;color:var(--storm);margin:1.5em 0 .55em;letter-spacing:-.015em}
+.rt h3{font-family:var(--font-head);font-size:1.25em;font-weight:700;line-height:1.3;color:var(--storm);margin:1.3em 0 .5em;letter-spacing:-.01em}
+.rt p{margin-bottom:1.2em}
+.rt strong,.rt b{font-weight:700;color:var(--storm)}
+.rt ul,.rt ol{margin:0 0 1.2em 1.5em}
+.rt li{margin-bottom:.4em}
+.rt blockquote{border-left:4px solid var(--cyan);background:var(--ice);padding:12px 18px;margin:1.2em 0;border-radius:0 6px 6px 0}
+.rt a{color:var(--sky3);text-decoration:underline}
+.rt hr{border:none;border-top:1px solid var(--border);margin:1.6em 0}
+.rt table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9em}
+.rt th,.rt td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+.rt th{background:var(--ice);font-weight:700}
+.reader-body.rt::after{content:"";display:block;clear:both}
+.rt figure.img-block{margin:.3em 0 1em;max-width:100%}
+.rt figure.img-block img{width:100%;height:auto;display:block;border-radius:6px;box-shadow:var(--shadow)}
+.rt figure.img-left{float:left;margin:.3em 1.5em 1em 0}
+.rt figure.img-right{float:right;margin:.3em 0 1em 1.5em}
+.rt figure.img-center{float:none;margin-left:auto;margin-right:auto;clear:both}
+.rt figure.sz-s{width:25%}
+.rt figure.sz-m{width:40%}
+.rt figure.sz-l{width:60%}
+.rt figure.sz-f{width:100%;float:none;clear:both;margin-left:0;margin-right:0}
+.rt figcaption{font-family:var(--font-sans);font-size:13px;color:var(--gray);margin-top:6px;line-height:1.4}
+.rt .yt-embed{position:relative;aspect-ratio:16/9;clear:both;margin:1.4em 0;border-radius:8px;overflow:hidden;background:#000;width:100%}
+.rt .yt-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media(max-width:640px){
+  .rt figure.img-left,.rt figure.img-right{float:none;margin:1em 0}
+  .rt figure.sz-s,.rt figure.sz-m,.rt figure.sz-l{width:100%}
+}
+
+/* ===== UREJEVALNIK ===== */
+#editorModal .modal{max-width:900px}
+.rte{border:1.5px solid var(--border);border-radius:var(--radius);background:#fff}
+.rte:focus-within{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,180,216,.1)}
+.rte-toolbar{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding:8px;background:var(--ice);border-bottom:1px solid var(--border);border-radius:5px 5px 0 0;position:sticky;top:0;z-index:3}
+.rte-toolbar button,.rte-imgbar button{min-width:32px;height:32px;padding:0 10px;border:1px solid var(--border);border-radius:5px;background:#fff;color:var(--storm);font-size:13px;font-weight:600;transition:all var(--tr)}
+.rte-toolbar button:hover,.rte-imgbar button:hover{background:var(--ice2)}
+.rte-toolbar button.on,.rte-imgbar button.on{background:var(--sky);color:#fff;border-color:var(--sky)}
+.rte-sep{width:1px;height:22px;background:var(--border2);margin:0 4px}
+.rte-panel,.rte-imgbar{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;padding:10px;background:#f4fafe;border-bottom:1px solid var(--border)}
+.rte-imgbar{align-items:center}
+.rte-imgbar .lbl{font-size:12px;font-weight:600;color:var(--sky);margin-right:4px}
+.rte-panel .f{flex:1 1 150px}
+.rte-panel .f.wide{flex:2 1 280px}
+.rte-panel .f label{margin-bottom:3px;font-size:11px}
+.rte-panel .f input,.rte-panel .f select{padding:7px 10px;font-size:13px}
+.rte-panel .f.btns{flex:0 0 auto;display:flex;gap:6px}
+.rte-area{min-height:300px;max-height:62vh;overflow-y:auto;padding:16px 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.7;color:var(--text);outline:none}
+.rte-area:empty::before{content:attr(data-placeholder);color:#8aa4b5;pointer-events:none}
+.rte-area figure.img-block,.rte-area .yt-embed{cursor:pointer}
+.rte-area figure.sel,.rte-area .yt-embed.sel{outline:3px solid var(--cyan);outline-offset:2px}
+.rte-area .yt-embed iframe{pointer-events:none}
+
 </style>
 </head>
 
@@ -1610,12 +1676,80 @@ main.reader-open>.content-wrapper{display:none}
       <div class="form-group">
 
         <label>Vsebina *</label>
+        <div class="rte">
+          <div class="rte-toolbar" id="rteToolbar">
+            <button type="button" data-cmd="bold" title="Krepko (Ctrl+B)"><b>B</b></button>
+            <button type="button" data-cmd="italic" title="Ležeče (Ctrl+I)"><i>I</i></button>
+            <button type="button" data-cmd="underline" title="Podčrtano (Ctrl+U)"><u>U</u></button>
+            <span class="rte-sep"></span>
+            <button type="button" data-block="h2" title="Velik naslov">Naslov</button>
+            <button type="button" data-block="h3" title="Podnaslov">Podnaslov</button>
+            <button type="button" data-block="p" title="Navaden odstavek">Odstavek</button>
+            <span class="rte-sep"></span>
+            <button type="button" data-cmd="insertUnorderedList" title="Seznam s pikami">• Seznam</button>
+            <button type="button" data-cmd="insertOrderedList" title="Oštevilčen seznam">1. Seznam</button>
+            <button type="button" data-block="blockquote" title="Citat">❝ Citat</button>
+            <span class="rte-sep"></span>
+            <button type="button" data-act="link">🔗 Povezava</button>
+            <button type="button" data-act="image">🖼 Slika</button>
+            <button type="button" data-act="youtube">▶ YouTube</button>
+            <span class="rte-sep"></span>
+            <button type="button" data-act="clear" title="Odstrani oblikovanje">✕ Počisti</button>
+          </div>
 
-        <textarea
-          id="articleContent"
-          rows="9"
-          placeholder="Celotna vsebina…"
-        ></textarea>
+          <div class="rte-panel" id="rtePanel" hidden>
+            <div class="f wide">
+              <label id="rteUrlLabel">Povezava</label>
+              <input type="text" id="rteUrl" placeholder="https://…" autocomplete="off">
+            </div>
+            <div class="f" data-for="image">
+              <label>Položaj</label>
+              <select id="rtePos">
+                <option value="img-left">Levo (besedilo teče ob desni)</option>
+                <option value="img-right">Desno (besedilo teče ob levi)</option>
+                <option value="img-center">Na sredini</option>
+              </select>
+            </div>
+            <div class="f" data-for="image">
+              <label>Velikost</label>
+              <select id="rteSize">
+                <option value="sz-s">Majhna</option>
+                <option value="sz-m" selected>Srednja</option>
+                <option value="sz-l">Velika</option>
+                <option value="sz-f">Polna širina</option>
+              </select>
+            </div>
+            <div class="f wide" data-for="image">
+              <label>Podpis slike (neobvezno)</label>
+              <input type="text" id="rteCap" placeholder="Npr. Snežne padavine nad Pohorjem" autocomplete="off">
+            </div>
+            <div class="f btns">
+              <button type="button" class="btn btn-primary btn-sm" id="rteInsertBtn">Vstavi</button>
+              <button type="button" class="btn btn-outline btn-sm" id="rteCancelBtn">Prekliči</button>
+            </div>
+          </div>
+
+          <div class="rte-imgbar" id="rteImgBar" hidden>
+            <span class="lbl" data-img>Slika:</span>
+            <button type="button" data-img-pos="img-left" data-img>⬅ Levo</button>
+            <button type="button" data-img-pos="img-center" data-img>↔ Sredina</button>
+            <button type="button" data-img-pos="img-right" data-img>Desno ➡</button>
+            <span class="rte-sep" data-img></span>
+            <button type="button" data-img-size="sz-s" data-img>Majhna</button>
+            <button type="button" data-img-size="sz-m" data-img>Srednja</button>
+            <button type="button" data-img-size="sz-l" data-img>Velika</button>
+            <button type="button" data-img-size="sz-f" data-img>Polna</button>
+            <span class="rte-sep" data-img></span>
+            <button type="button" data-img-del="1" style="color:var(--red)">🗑 Odstrani</button>
+          </div>
+
+          <div class="rte-area rt" id="articleEditor" contenteditable="true"
+               data-placeholder="Tukaj napišite ali prilepite besedilo (npr. iz ChatGPT) – krepki naslovi ostanejo."></div>
+        </div>
+        <div class="form-hint">
+          Prilepljeno besedilo ohrani krepke naslove, sezname in povezave. Sliko vstavite z gumbom »Slika« (Imgur povezava),
+          nato nanjo kliknite za spremembo položaja ali velikosti. Slika se vstavi pred odstavek, v katerem je kurzor.
+        </div>
 
       </div>
 
@@ -1632,7 +1766,7 @@ main.reader-open>.content-wrapper{display:none}
         >
 
         <div class="form-hint">
-          Fotografija, ki se prikaže na vrhu članka. Priporočeno: 1200 × 630 px.
+          Fotografija, ki se prikaže na vrhu članka (in kot sličica). Priporočeno: 1200 × 630 px. Imgur povezavo (npr. https://imgur.com/abc123) samodejno pretvorim v direktno.
         </div>
 
       </div>
@@ -2826,11 +2960,7 @@ function renderNav(){
 
     };
 
-    nav.appendChild(d);
-
-  });
-
-}
+    nav.appendChild(d);});renderArchiveNav(nav);}
 
 
 /* ============================================================
@@ -2887,9 +3017,7 @@ function filterCategory(cat,el){
   document.getElementById(
     'sectionTitle'
   ).textContent=
-    cat==='vse'
-      ? 'Najnovejše'
-      : cat;
+    cat==='vse'?'Najnovejše':catLabel(cat);
 
   document.getElementById(
     'heroSection'
@@ -3174,7 +3302,7 @@ function renderHero(){
       'heroSection'
     );
 
-  if(!STATE.articles.length){
+  if(!liveArticles().length){
 
     s.innerHTML='';
     return;
@@ -3182,7 +3310,7 @@ function renderHero(){
   }
 
   const sorted=
-    [...STATE.articles]
+    [...liveArticles()]
       .sort(
         (a,b)=>
           new Date(b.date)-
@@ -3243,7 +3371,7 @@ function renderHero(){
           </h2>
 
           <p>
-            ${esc(h.excerpt||'')}
+            ${esc(h.excerpt||stripHtml(h.content||'').substring(0,180))}
           </p>
 
           <div class="hero-meta">
@@ -3284,7 +3412,7 @@ function renderHero(){
           </h3>
 
           <p>
-            ${esc(h2.excerpt||'')}
+            ${esc(h2.excerpt||stripHtml(h2.content||'').substring(0,180))}
           </p>
 
           <div class="hero-side-meta">
@@ -3320,7 +3448,7 @@ function renderHero(){
           </h3>
 
           <p>
-            ${esc(h3.excerpt||'')}
+            ${esc(h3.excerpt||stripHtml(h3.content||'').substring(0,180))}
           </p>
 
           <div class="hero-side-meta">
@@ -3363,8 +3491,7 @@ function renderArticles(){
     (searchInput.value||'')
       .toLowerCase();
 
-  let arts=
-  [...STATE.articles]
+  let arts=[...baseArticles(q)]
     .sort(
       (a,b)=>
         new Date(b.date)-
@@ -3386,18 +3513,7 @@ if(
   );
 }
 
-  if(
-    STATE.currentCategory!=='vse'
-  ){
-
-    arts=
-      arts.filter(
-        a=>
-          a.category===
-          STATE.currentCategory
-      );
-
-  }
+  if(STATE.currentCategory!=='vse'&&!isYearView()){arts=arts.filter(a=>a.category===STATE.currentCategory);}
 
   if(q){
 
@@ -3416,9 +3532,7 @@ if(
 
           ||
 
-          (a.content||'')
-            .toLowerCase()
-            .includes(q)
+          stripHtml(a.content||'').toLowerCase().includes(q)
       );
 
   }
@@ -3511,11 +3625,7 @@ if(
           </div>
 
           <div class="card-excerpt">
-            ${esc(
-              a.excerpt||
-              (a.content||'')
-                .substring(0,160)
-            )}
+            ${esc(a.excerpt||stripHtml(a.content||'').substring(0,160))}
           </div>
 
           <div class="card-footer">
@@ -3589,7 +3699,7 @@ function renderSidebar(){
     );
 
   const top=
-    [...STATE.articles]
+    [...liveArticles()]
       .sort(
         (a,b)=>
           new Date(b.date)-
@@ -3774,7 +3884,7 @@ function renderSidebar(){
         STATE.categories.map(c=>{
 
           const cnt=
-            STATE.articles.filter(
+            liveArticles().filter(
               a=>
                 a.category===c
             ).length;
@@ -3967,7 +4077,7 @@ function openReader(id){
       ''
     }
 
-    <div class="reader-body">
+    <div class="reader-body rt">
       ${formatContent(a.content||'')}
     </div>
 
@@ -4186,9 +4296,7 @@ function openArticleEditor(id=null){
       'articleExcerpt'
     ).value=a.excerpt||'';
 
-    document.getElementById(
-      'articleContent'
-    ).value=a.content||'';
+    setEditorContent(a.content||'');
 
     document.getElementById(
       'articleImage'
@@ -4227,14 +4335,13 @@ function openArticleEditor(id=null){
     [
       'articleTitle',
       'articleAuthor',
-      'articleExcerpt',
-      'articleContent',
-      'articleImage'
+      'articleExcerpt','articleImage'
     ].forEach(
       i=>
         document.getElementById(i).value=''
     );
 
+    setEditorContent('');
     /* POČISTI DODATNE FOTOGRAFIJE */
 
     document.getElementById(
@@ -4266,15 +4373,11 @@ async function saveArticle(){
       'articleTitle'
     ).value.trim();
 
-  const content=
-    document.getElementById(
-      'articleContent'
-    ).value.trim();
+  const content=getEditorContent();
 
   /* PRIDOBI DODATNE FOTOGRAFIJE */
 
-  const images=
-    getArticleImages();
+  const images=getArticleImages().map(normalizeImageUrl);
 
   if(!title){
 
@@ -4346,10 +4449,7 @@ async function saveArticle(){
 
     content,
 
-    image:
-      document.getElementById(
-        'articleImage'
-      ).value.trim(),
+    image:normalizeImageUrl(document.getElementById('articleImage').value.trim()),
 
     /* DODATNE FOTOGRAFIJE */
 
@@ -5076,10 +5176,7 @@ function readTime(t){
   return Math.max(
     1,
     Math.round(
-      (t||'')
-        .split(' ')
-        .length/
-        200
+      stripHtml(t||'').split(/\s+/).length/200
     )
   );
 
@@ -5091,17 +5188,488 @@ function readTime(t){
 ============================================================ */
 
 function formatContent(text){
-
-  return text
-    .split('\n')
-    .filter(Boolean)
-    .map(
-      p=>
-        `<p>${esc(p)}</p>`
-    )
-    .join('');
-
+  text=text||'';
+  if(!isHtmlContent(text)){
+    return text.split('\n').filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join('');
+  }
+  const wrap=document.createElement('div');
+  wrap.innerHTML=sanitizeHtml(text,true);
+  hydrateMedia(wrap,false);
+  return wrap.innerHTML;
 }
+
+
+/* ============================================================
+   LETNI ARHIV (samodejno ob novem letu)
+============================================================ */
+function curYear(){return new Date().getFullYear();}
+function artYear(a){return new Date(a.date).getFullYear();}
+function liveArticles(){return STATE.articles.filter(a=>!(artYear(a)<curYear()));}
+function archiveYears(){
+  const set=new Set();
+  STATE.articles.forEach(a=>{const y=artYear(a);if(y<curYear())set.add(y);});
+  return [...set].sort((a,b)=>b-a);
+}
+function isYearView(){return String(STATE.currentCategory||'').startsWith('year:');}
+function catLabel(cat){return String(cat).startsWith('year:')?'Arhiv '+String(cat).slice(5):cat;}
+function baseArticles(q){
+  if(isYearView()){
+    const y=parseInt(STATE.currentCategory.slice(5));
+    return STATE.articles.filter(a=>artYear(a)===y);
+  }
+  return q?STATE.articles:liveArticles();
+}
+function renderArchiveNav(nav){
+  archiveYears().forEach(y=>{
+    const key='year:'+y;
+    const d=document.createElement('div');
+    d.className='nav-item'+(STATE.currentCategory===key?' active':'');
+    d.dataset.cat=key;
+    d.textContent='📁 '+y;
+    d.onclick=function(){filterCategory(key,this);};
+    nav.appendChild(d);
+  });
+}
+/* če stran ostane odprta čez polnoč 31.12. → osveži */
+(function(){
+  let y=curYear();
+  setInterval(()=>{
+    if(curYear()!==y){
+      y=curYear();
+      if(isYearView())STATE.currentCategory='vse';
+      renderNav();renderHero();renderArticles();renderSidebar();
+    }
+  },60000);
+})();
+
+/* ============================================================
+   POMOŽNE FUNKCIJE ZA VSEBINO
+============================================================ */
+function isHtmlContent(s){
+  return /<\/?(p|h[1-6]|ul|ol|li|strong|b|em|i|u|figure|img|div|br|blockquote|table|a)\b[^>]*>/i.test(String(s||''));
+}
+function stripHtml(s){
+  s=String(s||'');
+  if(!isHtmlContent(s))return s;
+  const d=new DOMParser().parseFromString(
+    s.replace(/<\/(p|h[1-6]|li|div|blockquote|figcaption|tr)>/gi,' </$1>').replace(/<br\s*\/?>/gi,' '),
+    'text/html'
+  );
+  return (d.body.textContent||'').replace(/\s+/g,' ').trim();
+}
+function safeUrl(u,allowMail){
+  u=(u||'').trim();
+  if(/^https?:\/\//i.test(u))return u;
+  if(allowMail&&/^mailto:/i.test(u))return u;
+  return '';
+}
+function normalizeImageUrl(u){
+  u=(u||'').trim();
+  if(!u)return '';
+  if(!/^https?:\/\//i.test(u))u='https://'+u;
+  try{
+    const x=new URL(u);
+    const host=x.hostname.toLowerCase();
+    if(/(^|\.)imgur\.com$/.test(host)&&host!=='i.imgur.com'){
+      const m=x.pathname.match(/^\/(?:gallery\/)?([A-Za-z0-9]{5,8})(?:\.(jpe?g|png|gif|webp))?$/);
+      if(m)return 'https://i.imgur.com/'+m[1]+'.'+(m[2]||'jpg');
+    }
+    return x.href;
+  }catch(e){return u;}
+}
+function youtubeId(url){
+  url=(url||'').trim();
+  if(/^[\w-]{11}$/.test(url))return url;
+  try{
+    const u=new URL(/^https?:\/\//i.test(url)?url:'https://'+url);
+    const h=u.hostname.replace(/^(www|m)\./,'');
+    if(h==='youtu.be'){
+      const id=u.pathname.slice(1).split('/')[0];
+      return /^[\w-]{11}$/.test(id)?id:null;
+    }
+    if(h.endsWith('youtube.com')||h.endsWith('youtube-nocookie.com')){
+      const v=u.searchParams.get('v');
+      if(v&&/^[\w-]{11}$/.test(v))return v;
+      const m=u.pathname.match(/^\/(?:embed|shorts|live|v)\/([\w-]{11})/);
+      if(m)return m[1];
+    }
+  }catch(e){}
+  return null;
+}
+
+/* Čiščenje HTML: dovoli le varne oznake (zaščita + lep prikaz prilepljenega besedila) */
+function sanitizeHtml(html,allowMedia){
+  const doc=new DOMParser().parseFromString('<body>'+(html||'')+'</body>','text/html');
+  const DROP=new Set(['script','style','meta','link','head','title','iframe','object','embed','svg','form','input','button','textarea','select','noscript','template','canvas','audio','video']);
+  const BLOCK=new Set(['p','h2','h3','ul','ol','blockquote','hr','table','figure','div']);
+  const hasBlockChild=el=>!!el.querySelector('p,div,h1,h2,h3,h4,h5,h6,ul,ol,li,blockquote,table,figure,hr');
+  const mk=t=>document.createElement(t);
+
+  function walk(src,dst){
+    src.childNodes.forEach(n=>{
+      if(n.nodeType===3){
+        if(!n.textContent.trim()&&/^(UL|OL|TABLE|TBODY|THEAD|TR)$/.test(dst.tagName))return;
+        dst.appendChild(document.createTextNode(n.textContent));
+        return;
+      }
+      if(n.nodeType!==1)return;
+      const tag=n.tagName.toLowerCase();
+      if(DROP.has(tag))return;
+      switch(tag){
+        case 'b':case 'strong':{
+          const fw=n.style.fontWeight;
+          if(fw==='normal'||fw==='400'){walk(n,dst);return;}
+          const e=mk('strong');dst.appendChild(e);walk(n,e);return;
+        }
+        case 'i':case 'em':{const e=mk('em');dst.appendChild(e);walk(n,e);return;}
+        case 'u':{const e=mk('u');dst.appendChild(e);walk(n,e);return;}
+        case 'h1':case 'h2':{const e=mk('h2');dst.appendChild(e);walk(n,e);return;}
+        case 'h3':case 'h4':case 'h5':case 'h6':{const e=mk('h3');dst.appendChild(e);walk(n,e);return;}
+        case 'p':{
+          if(dst.tagName==='LI'){walk(n,dst);return;}
+          const e=mk('p');dst.appendChild(e);walk(n,e);return;
+        }
+        case 'div':{
+          if(allowMedia&&n.classList.contains('yt-embed')){
+            const id=n.getAttribute('data-yt');
+            if(/^[\w-]{11}$/.test(id||'')){
+              const d=mk('div');d.className='yt-embed';d.setAttribute('data-yt',id);dst.appendChild(d);
+            }
+            return;
+          }
+          if(hasBlockChild(n)){walk(n,dst);return;}
+          const e=mk('p');dst.appendChild(e);walk(n,e);return;
+        }
+        case 'br':dst.appendChild(mk('br'));return;
+        case 'hr':dst.appendChild(mk('hr'));return;
+        case 'blockquote':case 'ul':case 'ol':case 'li':
+        case 'table':case 'thead':case 'tbody':case 'tr':case 'th':case 'td':{
+          const e=mk(tag);dst.appendChild(e);walk(n,e);return;
+        }
+        case 'a':{
+          const href=safeUrl(n.getAttribute('href'),true);
+          if(!href){walk(n,dst);return;}
+          const a=mk('a');a.setAttribute('href',href);
+          a.setAttribute('target','_blank');a.setAttribute('rel','noopener noreferrer');
+          dst.appendChild(a);walk(n,a);return;
+        }
+        case 'figure':{
+          if(!allowMedia)return;
+          const img=n.querySelector('img');
+          const src=safeUrl(img&&img.getAttribute('src'));
+          if(!src)return;
+          const f=mk('figure');
+          const pos=['img-left','img-right','img-center'].find(c=>n.classList.contains(c))||'img-center';
+          const sz=['sz-s','sz-m','sz-l','sz-f'].find(c=>n.classList.contains(c))||'sz-f';
+          f.className='img-block '+pos+' '+sz;
+          const im=mk('img');im.setAttribute('src',src);im.setAttribute('alt',img.getAttribute('alt')||'');im.setAttribute('loading','lazy');
+          f.appendChild(im);
+          const cap=n.querySelector('figcaption');
+          if(cap&&cap.textContent.trim()){const fc=mk('figcaption');fc.textContent=cap.textContent.trim();f.appendChild(fc);}
+          dst.appendChild(f);return;
+        }
+        case 'img':{
+          if(!allowMedia)return;
+          const src=safeUrl(n.getAttribute('src'));
+          if(!src)return;
+          const f=mk('figure');f.className='img-block img-center sz-f';
+          const im=mk('img');im.setAttribute('src',src);im.setAttribute('alt',n.getAttribute('alt')||'');im.setAttribute('loading','lazy');
+          f.appendChild(im);dst.appendChild(f);return;
+        }
+        default:{
+          // span, font, ... : obdrži samo krepko/ležeče iz stilov (Word, Google Docs, ChatGPT)
+          let target=dst;
+          const fw=n.style&&n.style.fontWeight;
+          if(fw==='bold'||fw==='bolder'||parseInt(fw)>=600){const e=mk('strong');target.appendChild(e);target=e;}
+          if(n.style&&n.style.fontStyle==='italic'){const e=mk('em');target.appendChild(e);target=e;}
+          walk(n,target);
+        }
+      }
+    });
+  }
+
+  const out=mk('div');
+  walk(doc.body,out);
+
+  // prosto besedilo/inline elementi na vrhu → odstavki
+  const res=mk('div');
+  let cur=null;
+  [...out.childNodes].forEach(n=>{
+    const isBlock=n.nodeType===1&&BLOCK.has(n.tagName.toLowerCase());
+    if(isBlock){cur=null;res.appendChild(n);return;}
+    if(n.nodeType===3&&!n.textContent.trim()&&!cur)return;
+    if(!cur){cur=mk('p');res.appendChild(cur);}
+    cur.appendChild(n);
+  });
+  res.querySelectorAll('strong,em,u').forEach(e=>{if(!e.textContent.trim()&&!e.querySelector('br,img'))e.remove();});
+  res.querySelectorAll('p,h2,h3,blockquote,li').forEach(e=>{if(!e.textContent.trim()&&!e.querySelector('img'))e.remove();});
+  res.querySelectorAll('ul,ol').forEach(e=>{if(!e.querySelector('li'))e.remove();});
+  return res.innerHTML;
+}
+
+/* YouTube okvirji + urejanje medijev */
+function hydrateMedia(root,editing){
+  root.querySelectorAll('.yt-embed').forEach(el=>{
+    const id=el.getAttribute('data-yt');
+    if(!/^[\w-]{11}$/.test(id||'')){el.remove();return;}
+    el.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'" title="YouTube video" loading="lazy" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    if(editing)el.setAttribute('contenteditable','false');
+  });
+  if(editing){
+    root.querySelectorAll('figure.img-block').forEach(f=>{
+      f.setAttribute('contenteditable','false');
+      const im=f.querySelector('img');if(im)im.setAttribute('draggable','false');
+    });
+  }
+}
+
+/* ============================================================
+   UREJEVALNIK BESEDILA
+============================================================ */
+let rteRange=null,rteSelected=null,rteMode=null;
+const $rte=id=>document.getElementById(id);
+const rteEd=()=>$rte('articleEditor');
+
+function plainToHtml(text){
+  const lines=String(text||'').replace(/\r/g,'').split('\n');
+  const inline=t=>esc(t)
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/(^|[^*])\*(?!\s)([^*]+?)\*(?!\*)/g,'$1<em>$2</em>');
+  let html='',list=null;
+  const close=()=>{if(list){html+='</'+list+'>';list=null;}};
+  lines.forEach(raw=>{
+    const l=raw.trim();
+    if(!l){close();return;}
+    let m;
+    if((m=l.match(/^#{1,2}\s+(.*)$/))){close();html+='<h2>'+inline(m[1])+'</h2>';}
+    else if((m=l.match(/^#{3,6}\s+(.*)$/))){close();html+='<h3>'+inline(m[1])+'</h3>';}
+    else if(/^(-{3,}|\*{3,})$/.test(l)){close();html+='<hr>';}
+    else if((m=l.match(/^[-*•]\s+(.*)$/))){if(list!=='ul'){close();html+='<ul>';list='ul';}html+='<li>'+inline(m[1])+'</li>';}
+    else if((m=l.match(/^\d+[.)]\s+(.*)$/))){if(list!=='ol'){close();html+='<ol>';list='ol';}html+='<li>'+inline(m[1])+'</li>';}
+    else{close();html+='<p>'+inline(l)+'</p>';}
+  });
+  close();
+  return html;
+}
+
+function setEditorContent(content){
+  const ed=rteEd();if(!ed)return;
+  content=content||'';
+  if(!content)ed.innerHTML='';
+  else if(isHtmlContent(content))ed.innerHTML=sanitizeHtml(content,true);
+  else ed.innerHTML=content.split('\n').filter(Boolean).map(p=>'<p>'+esc(p)+'</p>').join('');
+  hydrateMedia(ed,true);
+  rteDeselect();rteClosePanel();rteRange=null;
+}
+function getEditorContent(){
+  const ed=rteEd();
+  const clone=ed.cloneNode(true);
+  clone.querySelectorAll('.yt-embed').forEach(e=>{e.innerHTML='';});
+  const html=sanitizeHtml(clone.innerHTML,true);
+  if(!stripHtml(html).trim()&&!/<figure|yt-embed/.test(html))return '';
+  return html;
+}
+
+function rteSaveRange(){
+  const sel=window.getSelection();
+  if(sel.rangeCount&&rteEd().contains(sel.anchorNode))rteRange=sel.getRangeAt(0).cloneRange();
+}
+function rteFocus(){
+  const ed=rteEd();
+  if(document.activeElement!==ed){
+    ed.focus();
+    const sel=window.getSelection();
+    sel.removeAllRanges();
+    if(rteRange)sel.addRange(rteRange);
+    else{const r=document.createRange();r.selectNodeContents(ed);r.collapse(false);sel.addRange(r);}
+  }
+}
+function rteState(){
+  try{
+    document.querySelectorAll('#rteToolbar [data-cmd]').forEach(b=>{
+      b.classList.toggle('on',document.queryCommandState(b.dataset.cmd));
+    });
+    const cur=(document.queryCommandValue('formatBlock')||'').toLowerCase().replace(/[<>]/g,'');
+    document.querySelectorAll('#rteToolbar [data-block]').forEach(b=>{
+      b.classList.toggle('on',b.dataset.block===cur&&cur!=='p');
+    });
+  }catch(e){}
+}
+
+function rteSelect(el){
+  rteDeselect();
+  rteSelected=el;el.classList.add('sel');
+  const bar=$rte('rteImgBar');bar.hidden=false;
+  const isImg=el.matches('figure');
+  bar.querySelectorAll('[data-img]').forEach(x=>{x.hidden=!isImg;});
+  bar.querySelectorAll('[data-img-pos],[data-img-size]').forEach(b=>{
+    const k=b.dataset.imgPos||b.dataset.imgSize;
+    b.classList.toggle('on',isImg&&el.classList.contains(k));
+  });
+}
+function rteDeselect(){
+  if(rteSelected){rteSelected.classList.remove('sel');rteSelected=null;}
+  const bar=$rte('rteImgBar');if(bar)bar.hidden=true;
+}
+function rteClosePanel(){const p=$rte('rtePanel');if(p)p.hidden=true;rteMode=null;}
+
+function rteOpenPanel(mode){
+  rteSaveRange();rteMode=mode;
+  const p=$rte('rtePanel');p.hidden=false;
+  p.querySelectorAll('[data-for]').forEach(el=>{el.hidden=!(mode==='image');});
+  $rte('rteUrlLabel').textContent=
+    mode==='image'?'Povezava slike (Imgur ali direktna povezava)':
+    mode==='youtube'?'YouTube povezava':'Povezava (URL)';
+  $rte('rteUrl').placeholder=mode==='image'?'https://imgur.com/abc123':mode==='youtube'?'https://www.youtube.com/watch?v=…':'https://…';
+  $rte('rteUrl').value='';$rte('rteCap').value='';
+  setTimeout(()=>$rte('rteUrl').focus(),0);
+}
+
+/* vstavi blok na zgornji nivo urejevalnika, pri odstavku s kurzorjem */
+function rtePlaceBlock(node,before){
+  const ed=rteEd();
+  let ref=null;
+  if(rteRange&&ed.contains(rteRange.startContainer)){
+    if(rteRange.startContainer===ed){
+      ref=ed.childNodes[rteRange.startOffset]||null;
+      if(ref&&!before)ref=ref.nextSibling;
+    }else{
+      let n=rteRange.startContainer;
+      while(n&&n.parentNode!==ed)n=n.parentNode;
+      if(n)ref=before?n:n.nextSibling;
+    }
+  }
+  ed.insertBefore(node,ref);
+  const last=ed.lastElementChild;
+  if(!last||last.matches('figure,.yt-embed')){
+    const p=document.createElement('p');p.innerHTML='<br>';ed.appendChild(p);
+  }
+}
+
+function rteInsert(){
+  const url=$rte('rteUrl').value.trim();
+  if(rteMode==='image'){
+    const src=normalizeImageUrl(url);
+    if(!safeUrl(src)){toast('Vnesite veljavno povezavo slike (https://…)','error');return;}
+    if(/imgur\.com\/(a|gallery)\//i.test(src)){
+      toast('To je Imgur album. Odprite sliko in kopirajte direktno povezavo (i.imgur.com/…).','error');return;
+    }
+    const cap=$rte('rteCap').value.trim();
+    const f=document.createElement('figure');
+    f.className='img-block '+$rte('rtePos').value+' '+$rte('rteSize').value;
+    const im=document.createElement('img');
+    im.setAttribute('src',src);im.setAttribute('alt',cap);
+    f.appendChild(im);
+    if(cap){const fc=document.createElement('figcaption');fc.textContent=cap;f.appendChild(fc);}
+    hydrateMedia(f.parentNode||f,true);
+    f.setAttribute('contenteditable','false');im.setAttribute('draggable','false');
+    rtePlaceBlock(f,true);
+    rteClosePanel();rteSelect(f);
+  }else if(rteMode==='youtube'){
+    const id=youtubeId(url);
+    if(!id){toast('Neveljavna YouTube povezava.','error');return;}
+    const d=document.createElement('div');
+    d.className='yt-embed';d.setAttribute('data-yt',id);
+    const wrap=document.createElement('div');wrap.appendChild(d);
+    hydrateMedia(wrap,true);
+    rtePlaceBlock(d,false);
+    rteClosePanel();rteSelect(d);
+  }else if(rteMode==='link'){
+    let href=url;
+    if(href&&!/^(https?:|mailto:)/i.test(href))href='https://'+href;
+    if(!safeUrl(href,true)){toast('Vnesite veljaven naslov povezave.','error');return;}
+    rteFocus();
+    const sel=window.getSelection();
+    if(sel.isCollapsed){
+      document.execCommand('insertHTML',false,'<a href="'+esc(href)+'" target="_blank" rel="noopener noreferrer">'+esc(url)+'</a>');
+    }else{
+      document.execCommand('createLink',false,href);
+    }
+    rteClosePanel();
+  }
+}
+
+function initRte(){
+  const ed=rteEd();if(!ed)return;
+  try{document.execCommand('defaultParagraphSeparator',false,'p');}catch(e){}
+
+  // orodna vrstica
+  const tb=$rte('rteToolbar');
+  tb.addEventListener('mousedown',e=>e.preventDefault());
+  tb.addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b)return;
+    if(b.dataset.cmd){
+      rteFocus();document.execCommand(b.dataset.cmd,false,null);rteState();
+    }else if(b.dataset.block){
+      rteFocus();
+      const want=b.dataset.block;
+      const cur=(document.queryCommandValue('formatBlock')||'').toLowerCase().replace(/[<>]/g,'');
+      document.execCommand('formatBlock',false,'<'+(cur===want?'p':want)+'>');
+      rteState();
+    }else if(b.dataset.act==='clear'){
+      rteFocus();document.execCommand('removeFormat',false,null);
+      document.execCommand('formatBlock',false,'<p>');rteState();
+    }else if(b.dataset.act){
+      rteOpenPanel(b.dataset.act);
+    }
+  });
+
+  // vstavljanje / preklic
+  $rte('rteInsertBtn').addEventListener('click',rteInsert);
+  $rte('rteCancelBtn').addEventListener('click',rteClosePanel);
+  $rte('rteUrl').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();rteInsert();}});
+
+  // orodna vrstica izbrane slike/videa
+  const bar=$rte('rteImgBar');
+  bar.addEventListener('mousedown',e=>e.preventDefault());
+  bar.addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b||!rteSelected)return;
+    if(b.dataset.imgDel){rteSelected.remove();rteSelected=null;rteDeselect();return;}
+    if(b.dataset.imgPos){
+      ['img-left','img-right','img-center'].forEach(c=>rteSelected.classList.remove(c));
+      rteSelected.classList.add(b.dataset.imgPos);
+    }
+    if(b.dataset.imgSize){
+      ['sz-s','sz-m','sz-l','sz-f'].forEach(c=>rteSelected.classList.remove(c));
+      rteSelected.classList.add(b.dataset.imgSize);
+    }
+    rteSelect(rteSelected);
+  });
+
+  // klik na sliko/video = izbira
+  ed.addEventListener('click',e=>{
+    const m=e.target.closest('figure.img-block,.yt-embed');
+    if(m&&ed.contains(m))rteSelect(m);else rteDeselect();
+  });
+  ed.addEventListener('keydown',e=>{
+    if(!rteSelected)return;
+    if(e.key==='Delete'||e.key==='Backspace'){
+      e.preventDefault();rteSelected.remove();rteSelected=null;rteDeselect();
+    }else if(!e.ctrlKey&&!e.metaKey&&e.key.length===1){rteDeselect();}
+  });
+
+  // lepljenje (ChatGPT, Word, Google Docs … → ohrani krepke naslove)
+  ed.addEventListener('paste',e=>{
+    e.preventDefault();
+    const cd=e.clipboardData||window.clipboardData;
+    const html=cd.getData('text/html');
+    const text=cd.getData('text/plain');
+    let out='';
+    if(html&&/<(p|h[1-6]|ul|ol|li|strong|b|em|i|a|table|br|div|span)\b/i.test(html)){
+      out=sanitizeHtml(html,false);
+      const structured=/<(strong|h2|h3|ul|ol)\b/.test(out);
+      if(!structured&&/(^\s*#{1,6}\s)|\*\*[^*]+\*\*/m.test(text))out=plainToHtml(text);
+    }
+    if(!out.trim())out=plainToHtml(text);
+    document.execCommand('insertHTML',false,out);
+  });
+
+  document.addEventListener('selectionchange',()=>{
+    const sel=window.getSelection();
+    if(sel.rangeCount&&ed.contains(sel.anchorNode)){rteSaveRange();rteState();}
+  });
+}
+document.addEventListener('DOMContentLoaded',initRte);
 
 </script>
 
