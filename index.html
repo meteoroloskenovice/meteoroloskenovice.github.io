@@ -1234,8 +1234,24 @@ main.reader-open>.content-wrapper{display:none}
 .media-builder{display:grid;grid-template-columns:minmax(0,1fr) 120px 120px auto;gap:8px;align-items:center;margin-bottom:8px}
 .media-builder input,.media-builder select{min-width:0;width:100%;padding:9px 10px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans)}
 .article-inline-image{max-width:100%;height:auto;margin:6px 0 18px;border-radius:6px;box-shadow:var(--shadow)}
-.article-inline-image.float-left{float:left;width:min(42%,420px);margin:4px 24px 12px 0}
-.article-inline-image.float-right{float:right;width:min(42%,420px);margin:4px 0 12px 24px}
+.article-inline-image.size-small{width:min(28%,520px)}
+.article-inline-image.size-medium{width:min(40%,520px)}
+.article-inline-image.size-large{width:min(52%,520px)}
+.article-inline-image.float-left{float:left;margin:4px 24px 12px 0}
+.article-inline-image.float-right{float:right;margin:4px 0 12px 24px}
+.article-inline-image.float-center{float:none;display:block;margin:16px auto}
+.rich-editor .article-inline-image{cursor:pointer}
+.rich-editor .article-inline-image.is-selected{outline:3px solid var(--cyan)}
+.rich-editor div[data-yt]{clear:both;min-height:110px;margin:14px 0;border-radius:8px;background:#10222d;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:700;user-select:none}
+.rich-editor div[data-yt]::before{content:"▶ YouTube video"}
+.rich-editor div[data-yt].is-selected{outline:3px solid var(--cyan)}
+.editor-media-panel{padding:10px;background:#f7fbfd;border-bottom:1px solid var(--border);display:none;gap:8px;align-items:center;flex-wrap:wrap}
+.editor-media-panel input,.editor-media-panel select{padding:8px 10px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans);min-width:0}
+.editor-media-panel input{flex:1 1 240px}
+.reader-body img,.reader-image,.reader-gallery-item img{cursor:zoom-in}
+.img-lightbox{position:fixed;inset:0;z-index:8000;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(8,20,30,.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);cursor:zoom-out}
+.img-lightbox.open{display:flex}
+.img-lightbox img{width:auto;height:auto;max-width:96vw;max-height:94vh;border-radius:6px;box-shadow:0 10px 50px rgba(0,0,0,.5);cursor:zoom-out;background:#fff}
 .article-inline-clear{clear:both}
 .reader-body::after{content:"";display:block;clear:both}
 .reader-body .article-youtube{position:relative;width:100%;aspect-ratio:16/9;margin:28px 0;border-radius:8px;overflow:hidden;box-shadow:var(--shadow);background:#000}
@@ -1248,7 +1264,7 @@ main.reader-open>.content-wrapper{display:none}
 @media(max-width:700px){
   .media-builder{grid-template-columns:1fr 1fr}
   .media-builder input{grid-column:1/-1}
-  .article-inline-image.float-left,.article-inline-image.float-right{float:none;width:100%;margin:8px 0 20px}
+  .article-inline-image.float-left,.article-inline-image.float-right,.article-inline-image.float-center{float:none;display:block;width:100%;margin:8px 0 20px}
 }
 
 /* RESPONSIVE */
@@ -1656,6 +1672,24 @@ main.reader-open>.content-wrapper{display:none}
             <button type="button" onclick="formatEditor('formatBlock','BLOCKQUOTE')" title="Citiranje">❝</button>
             <button type="button" onclick="formatEditor('removeFormat')" title="Odstrani oblikovanje">Tx</button>
             <button type="button" onclick="insertEditorLink()" title="Povezava">🔗</button>
+            <button type="button" onmousedown="event.preventDefault()" onclick="openMediaPanel('image')" title="Vstavi sliko na mesto kurzorja">🖼 Slika</button>
+            <button type="button" onmousedown="event.preventDefault()" onclick="openMediaPanel('youtube')" title="Vstavi YouTube na mesto kurzorja">▶ YouTube</button>
+          </div>
+          <div id="editorMediaPanel" class="editor-media-panel">
+            <input type="url" id="mediaUrl" placeholder="https://…">
+            <select id="mediaSize" title="Velikost slike">
+              <option value="small">Majhna</option>
+              <option value="medium" selected>Srednja</option>
+              <option value="large">Velika</option>
+            </select>
+            <select id="mediaSide" title="Položaj slike">
+              <option value="left">Levo</option>
+              <option value="right" selected>Desno</option>
+              <option value="center">Na sredini</option>
+            </select>
+            <button type="button" class="btn btn-primary btn-sm" id="mediaApplyBtn" onclick="applyMediaPanel()">Vstavi</button>
+            <button type="button" class="btn btn-danger btn-sm" id="mediaRemoveBtn" onclick="removeMediaTarget()" style="display:none">Odstrani</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="closeMediaPanel()">Prekliči</button>
           </div>
           <div id="articleContentEditor" class="rich-editor" contenteditable="true" spellcheck="true" data-placeholder="Prilepite ali napišite celotno vsebino…"></div>
         </div>
@@ -1710,18 +1744,8 @@ main.reader-open>.content-wrapper{display:none}
 
       </div>
 
-      <!-- SLIKE OB BESEDILU -->
-      <div class="form-group">
-        <label>Slike ob besedilu</label>
-        <div id="articleInlineImages"></div>
-        <button type="button" class="btn btn-outline btn-sm" onclick="addInlineImageField()">+ Dodaj sliko ob besedilu</button>
-        <div class="form-hint">Vnesite Imgur URL, izberite velikost in levo/desno. Besedilo se bo samodejno ovilo okoli slike.</div>
-      </div>
-
-      <div class="form-group">
-        <label>YouTube video</label>
-        <input type="url" id="articleYoutube" placeholder="https://www.youtube.com/watch?v=… ali https://youtu.be/…">
-        <div class="form-hint">Video se prikaže v članku kot odziven YouTube predvajalnik.</div>
+      <div class="form-hint">
+        Slike ob besedilu in YouTube vstavite neposredno v besedilo: postavite kurzor na želeno mesto in kliknite gumb 🖼 Slika ali ▶ YouTube v orodni vrstici. Klik na vstavljeno sliko ali video v urejevalniku omogoča spremembo ali odstranitev.
       </div>
 
     </div>
@@ -4020,40 +4044,6 @@ function getArticleImages(){
     .map(input=>input.value.trim()).filter(Boolean);
 }
 
-function addInlineImageField(data={}){
-
-  const container=document.getElementById('articleInlineImages');
-  const row=document.createElement('div');
-  row.className='media-builder';
-
-  const item={url:data.url||'',width:data.width||'medium',side:data.side||'right'};
-
-  row.innerHTML=`
-    <input type="url" class="article-inline-url" placeholder="https://i.imgur.com/…" value="${esc(item.url)}">
-    <select class="article-inline-width">
-      <option value="small" ${item.width==='small'?'selected':''}>Majhna</option>
-      <option value="medium" ${item.width==='medium'?'selected':''}>Srednja</option>
-      <option value="large" ${item.width==='large'?'selected':''}>Velika</option>
-    </select>
-    <select class="article-inline-side">
-      <option value="left" ${item.side==='left'?'selected':''}>Levo</option>
-      <option value="right" ${item.side==='right'?'selected':''}>Desno</option>
-    </select>
-    <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">✕</button>
-  `;
-  container.appendChild(row);
-}
-
-function getInlineImages(){
-  return [...document.querySelectorAll('#articleInlineImages .media-builder')]
-    .map(row=>({
-      url:row.querySelector('.article-inline-url')?.value.trim()||'',
-      width:row.querySelector('.article-inline-width')?.value||'medium',
-      side:row.querySelector('.article-inline-side')?.value||'right'
-    }))
-    .filter(x=>x.url);
-}
-
 function getYoutubeId(url){
   const value=String(url||'').trim();
   const m=value.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
@@ -4125,7 +4115,7 @@ function openArticleEditor(id=null){
       'articleExcerpt'
     ).value=a.excerpt||'';
 
-    setEditorContent(a.content||'');
+    setEditorContent(legacyMediaToContent(a));
 
     document.getElementById(
       'articleImage'
@@ -4145,9 +4135,7 @@ function openArticleEditor(id=null){
         addArticleImageField(image)
     );
 
-    document.getElementById('articleInlineImages').innerHTML='';
-    (a.inlineImages||[]).forEach(image=>addInlineImageField(image));
-    document.getElementById('articleYoutube').value=a.youtube||'';
+    closeMediaPanel();
 
     document.getElementById(
       'btnSaveArticle'
@@ -4176,8 +4164,7 @@ function openArticleEditor(id=null){
     );
 
     setEditorContent('');
-    document.getElementById('articleYoutube').value='';
-    document.getElementById('articleInlineImages').innerHTML='';
+    closeMediaPanel();
 
     /* POČISTI DODATNE FOTOGRAFIJE */
 
@@ -4212,8 +4199,8 @@ async function saveArticle(){
 
   const content=getEditorContent();
   const images=getArticleImages();
-  const inlineImages=getInlineImages();
-  const youtube=document.getElementById('articleYoutube').value.trim();
+  const inlineImages=[];
+  const youtube='';
 
   if(!title){
 
@@ -5071,6 +5058,36 @@ function sanitizeRichHtml(html){
       if(child.nodeType===Node.ELEMENT_NODE){
         const el=child;
 
+        if(el.tagName==='IMG'){
+          const src=el.getAttribute('src')||'';
+          if(!/^https?:\/\//i.test(src)||!el.classList.contains('article-inline-image')){
+            el.remove();
+            return;
+          }
+          const size=['small','medium','large'].includes(el.dataset.size)?el.dataset.size:'medium';
+          const side=['left','right','center'].includes(el.dataset.side)?el.dataset.side:'right';
+          [...el.attributes].forEach(attr=>el.removeAttribute(attr.name));
+          el.setAttribute('src',src);
+          el.setAttribute('alt','');
+          el.setAttribute('loading','lazy');
+          el.setAttribute('class',`article-inline-image float-${side} size-${size}`);
+          el.setAttribute('data-size',size);
+          el.setAttribute('data-side',side);
+          return;
+        }
+
+        if(el.tagName==='DIV'&&el.hasAttribute('data-yt')){
+          const id=el.getAttribute('data-yt')||'';
+          if(!/^[A-Za-z0-9_-]{6,}$/.test(id)){
+            el.remove();
+            return;
+          }
+          [...el.attributes].forEach(attr=>el.removeAttribute(attr.name));
+          el.setAttribute('data-yt',id);
+          el.innerHTML='';
+          return;
+        }
+
         if(!allowedTags.has(el.tagName)){
           while(el.firstChild)node.insertBefore(el.firstChild,el);
           el.remove();
@@ -5102,7 +5119,10 @@ function sanitizeRichHtml(html){
 
 function setEditorContent(content){
   const editor=document.getElementById('articleContentEditor');
-  if(editor)editor.innerHTML=sanitizeRichHtml(content||'');
+  if(editor){
+    editor.innerHTML=sanitizeRichHtml(content||'');
+    decorateEditorMedia();
+  }
 }
 
 function getEditorContent(){
@@ -5130,22 +5150,277 @@ function safeUrl(url){
 function renderInlineImage(image){
   const url=safeUrl(image.url);
   if(!url)return '';
-  const width={small:'28%',medium:'40%',large:'52%'}[image.width||'medium']||'40%';
-  const side=image.side==='left'?'left':'right';
-  return `<img class="article-inline-image float-${side}" src="${url}" alt="" loading="lazy" style="width:min(${width},520px)">`;
+  const size=['small','medium','large'].includes(image.width)?image.width:'medium';
+  const side=['left','right','center'].includes(image.side)?image.side:'right';
+  return `<img class="article-inline-image float-${side} size-${size}" data-size="${size}" data-side="${side}" src="${url}" alt="" loading="lazy">`;
+}
+
+// Stari članki so imeli slike/YouTube v ločenih poljih. Ob urejanju jih
+// prenesemo v samo besedilo, da jih je mogoče premikati na želeno mesto.
+function legacyMediaToContent(a){
+  let html=sanitizeRichHtml(a.content||'');
+  const inline=(a.inlineImages||[]).filter(x=>x&&x.url);
+  if(inline.length)html=inline.map(renderInlineImage).join('')+html;
+  const id=getYoutubeId(a.youtube);
+  if(id)html+=`<div data-yt="${id}"></div>`;
+  return html;
 }
 
 function renderArticleContent(a){
   let html=sanitizeRichHtml(a.content||'');
-  const inline=(a.inlineImages||[]).filter(x=>x&&x.url);
 
+  // YouTube mesta v besedilu -> predvajalnik
+  html=html.replace(/<div data-yt="([A-Za-z0-9_-]{6,})"><\/div>/g,
+    (m,id)=>youtubeEmbed('https://youtu.be/'+id));
+
+  // stara polja (članki, ki še niso bili ponovno shranjeni)
+  const inline=(a.inlineImages||[]).filter(x=>x&&x.url);
   if(inline.length){
     html=inline.map(renderInlineImage).join('')+html+'<div class="article-inline-clear"></div>';
   }
-
   if(a.youtube)html+=youtubeEmbed(a.youtube);
+
   return html||normalizeRichText(a.content||'');
 }
+
+/* ============================================================
+   VSTAVLJANJE SLIK IN YOUTUBE NA MESTO KURZORJA
+============================================================ */
+
+let EDITOR_RANGE=null;
+let MEDIA_MODE='image';
+let MEDIA_TARGET=null;
+
+function saveEditorRange(){
+  const ed=document.getElementById('articleContentEditor');
+  const sel=window.getSelection();
+  if(ed&&sel&&sel.rangeCount&&ed.contains(sel.getRangeAt(0).commonAncestorContainer)){
+    EDITOR_RANGE=sel.getRangeAt(0).cloneRange();
+  }
+}
+
+function restoreEditorRange(){
+  const ed=document.getElementById('articleContentEditor');
+  ed.focus();
+  const sel=window.getSelection();
+  sel.removeAllRanges();
+  if(EDITOR_RANGE&&ed.contains(EDITOR_RANGE.commonAncestorContainer)){
+    sel.addRange(EDITOR_RANGE);
+  }else{
+    const r=document.createRange();
+    r.selectNodeContents(ed);
+    r.collapse(false);
+    sel.addRange(r);
+  }
+  const range=sel.getRangeAt(0);
+  range.collapse(false);
+  return range;
+}
+
+function clearMediaSelection(){
+  document.querySelectorAll('#articleContentEditor .is-selected')
+    .forEach(el=>el.classList.remove('is-selected'));
+}
+
+function openMediaPanel(mode,target=null){
+  const panel=document.getElementById('editorMediaPanel');
+  MEDIA_MODE=mode;
+  MEDIA_TARGET=target;
+  clearMediaSelection();
+  if(target)target.classList.add('is-selected');
+
+  const url=document.getElementById('mediaUrl');
+  const isImg=mode==='image';
+  document.getElementById('mediaSize').style.display=isImg?'':'none';
+  document.getElementById('mediaSide').style.display=isImg?'':'none';
+  url.placeholder=isImg?'URL slike (npr. https://i.imgur.com/…)':'https://www.youtube.com/watch?v=… ali https://youtu.be/…';
+
+  if(target&&isImg){
+    url.value=target.getAttribute('src')||'';
+    document.getElementById('mediaSize').value=target.dataset.size||'medium';
+    document.getElementById('mediaSide').value=target.dataset.side||'right';
+  }else if(target){
+    url.value='https://youtu.be/'+(target.getAttribute('data-yt')||'');
+  }else{
+    url.value='';
+  }
+
+  document.getElementById('mediaApplyBtn').textContent=target?'Posodobi':'Vstavi';
+  document.getElementById('mediaRemoveBtn').style.display=target?'':'none';
+  panel.style.display='flex';
+  url.focus();
+}
+
+function closeMediaPanel(){
+  const panel=document.getElementById('editorMediaPanel');
+  if(panel)panel.style.display='none';
+  MEDIA_TARGET=null;
+  clearMediaSelection();
+}
+
+function removeMediaTarget(){
+  if(MEDIA_TARGET)MEDIA_TARGET.remove();
+  closeMediaPanel();
+}
+
+function applyMediaPanel(){
+  const value=document.getElementById('mediaUrl').value.trim();
+
+  if(MEDIA_MODE==='image'){
+    if(!/^https?:\/\//i.test(value)){
+      toast('Vnesite veljaven URL slike (https://…)','error');
+      return;
+    }
+    const size=document.getElementById('mediaSize').value;
+    const side=document.getElementById('mediaSide').value;
+    let img=MEDIA_TARGET;
+    const isNew=!img;
+    if(isNew){
+      img=document.createElement('img');
+      img.alt='';
+    }
+    img.src=value;
+    img.className=`article-inline-image float-${side} size-${size}`;
+    img.dataset.size=size;
+    img.dataset.side=side;
+    if(isNew){
+      const range=restoreEditorRange();
+      range.insertNode(img);
+      range.setStartAfter(img);
+      range.collapse(true);
+      const sel=window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      EDITOR_RANGE=range.cloneRange();
+    }
+  }else{
+    const id=getYoutubeId(value);
+    if(!id){
+      toast('Vnesite veljaven YouTube URL','error');
+      return;
+    }
+    if(MEDIA_TARGET){
+      MEDIA_TARGET.setAttribute('data-yt',id);
+    }else{
+      insertYoutubeAtCursor(id);
+    }
+  }
+  closeMediaPanel();
+}
+
+function insertYoutubeAtCursor(id){
+  const ed=document.getElementById('articleContentEditor');
+  const range=restoreEditorRange();
+  const div=document.createElement('div');
+  div.setAttribute('data-yt',id);
+  div.setAttribute('contenteditable','false');
+
+  // najvišji blok, v katerem je kurzor
+  let block=range.startContainer;
+  while(block&&block.parentNode!==ed)block=block.parentNode;
+
+  if(!block){
+    ed.appendChild(div);
+  }else if(block.nodeType===1&&(block.tagName==='P'||block.tagName==='DIV')&&block.lastChild){
+    // odstavek razdelimo na mestu kurzorja
+    const r2=document.createRange();
+    r2.setStart(range.startContainer,range.startOffset);
+    r2.setEndAfter(block.lastChild);
+    const tail=r2.extractContents();
+    const tailBlock=document.createElement(block.tagName);
+    tailBlock.appendChild(tail);
+    block.after(div);
+    const hasContent=el=>el.textContent.trim()||el.querySelector('img');
+    if(hasContent(tailBlock))div.after(tailBlock);
+    if(!hasContent(block))block.remove();
+  }else if(block.nodeType===3){
+    const p=document.createElement('p');
+    block.after(div);
+  }else{
+    block.after(div);
+  }
+
+  if(!div.nextSibling){
+    const p=document.createElement('p');
+    p.innerHTML='<br>';
+    div.after(p);
+  }
+
+  const r=document.createRange();
+  r.setStart(div.nextSibling,0);
+  r.collapse(true);
+  const sel=window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+  EDITOR_RANGE=r.cloneRange();
+}
+
+function decorateEditorMedia(){
+  const ed=document.getElementById('articleContentEditor');
+  if(!ed)return;
+  ed.querySelectorAll('div[data-yt]').forEach(el=>el.setAttribute('contenteditable','false'));
+}
+
+function setupEditorMedia(){
+  const ed=document.getElementById('articleContentEditor');
+  if(!ed||ed.dataset.mediaReady)return;
+  ed.dataset.mediaReady='1';
+
+  ['keyup','mouseup','input','focus'].forEach(ev=>ed.addEventListener(ev,saveEditorRange));
+  document.addEventListener('selectionchange',()=>{
+    if(document.activeElement===ed)saveEditorRange();
+  });
+
+  ed.addEventListener('click',e=>{
+    const img=e.target.closest&&e.target.closest('img.article-inline-image');
+    const yt=e.target.closest&&e.target.closest('div[data-yt]');
+    if(img&&ed.contains(img))openMediaPanel('image',img);
+    else if(yt&&ed.contains(yt))openMediaPanel('youtube',yt);
+  });
+}
+
+/* ============================================================
+   POVEČAVA SLIK (LIGHTBOX)
+============================================================ */
+
+function openLightbox(srcImg){
+  let box=document.getElementById('imgLightbox');
+  if(!box){
+    box=document.createElement('div');
+    box.id='imgLightbox';
+    box.className='img-lightbox';
+    box.innerHTML='<img alt="">';
+    box.addEventListener('click',closeLightbox);
+    document.body.appendChild(box);
+  }
+  const big=box.querySelector('img');
+  // prikaz vsaj tako velik kot v članku, sicer v izvirni velikosti
+  const shownW=srcImg.getBoundingClientRect().width;
+  big.style.minWidth=Math.min(shownW,window.innerWidth*0.96)+'px';
+  big.src=srcImg.currentSrc||srcImg.src;
+  box.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeLightbox(){
+  const box=document.getElementById('imgLightbox');
+  if(box)box.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+document.addEventListener('click',e=>{
+  const img=e.target.closest&&e.target.closest('.reader-body img, img.reader-image, .reader-gallery-item img');
+  if(img){
+    e.preventDefault();
+    openLightbox(img);
+  }
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeLightbox();
+});
+
+document.addEventListener('DOMContentLoaded',setupEditorMedia);
 
 function formatContent(text){
   return normalizeRichText(text);
