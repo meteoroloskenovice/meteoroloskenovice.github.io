@@ -828,12 +828,12 @@ button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
 main.reader-open>#heroSection,
 main.reader-open>.content-wrapper{display:none}
 
-.reader-breadcrumb{
+.reader-bread{
   background:var(--sky);
   border-bottom:2px solid var(--cyan)
 }
 
-.reader-breadcrumb-inner{
+.reader-bread-inner{
   max-width:1280px;
   margin:0 auto;
   padding:11px 20px;
@@ -843,14 +843,14 @@ main.reader-open>.content-wrapper{display:none}
   font-size:13px
 }
 
-.reader-breadcrumb button{
+.reader-bread button{
   color:rgba(255,255,255,.75);
   font-size:13px;
   font-weight:500;
   transition:color var(--tr)
 }
 
-.reader-breadcrumb button:hover{color:var(--cyan)}
+.reader-bread button:hover{color:var(--cyan)}
 
 .reader-breadcrumb .crumb-sep{
   color:rgba(255,255,255,.3)
@@ -1536,18 +1536,7 @@ main.reader-open>.content-wrapper{display:none}
 
         <button onclick="closeReader()">
           ← Nazaj na naslovnico
-        </button>
-
-        <span class="crumb-sep">›</span>
-
-        <span
-          class="crumb-cat"
-          id="readerCrumbCat"
-        ></span>
-
-      </div>
-
-    </div>
+        
 
     <div
       class="reader-content"
