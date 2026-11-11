@@ -6,7 +6,7 @@
 <title>Meteorološke Novice</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:wght@500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -32,8 +32,8 @@
   --shadow:0 2px 12px rgba(11,61,107,.10);
   --shadow-lg:0 8px 36px rgba(11,61,107,.18);
   --radius:6px;
-  --font-serif:'Playfair Display',Georgia,serif;
-  --font-sans:'Inter',system-ui,sans-serif;
+  --font-serif:'Source Serif 4',Georgia,serif;
+  --font-sans:'Manrope',system-ui,sans-serif;
   --tr:.18s ease;
 }
 
@@ -1218,6 +1218,39 @@ main.reader-open>.content-wrapper{display:none}
 
 .footer-text{font-size:13px}
 
+
+/* BOGAT UREJEVALNIK */
+.rich-editor-wrap{border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;background:#fff}
+.rich-toolbar{display:flex;flex-wrap:wrap;gap:4px;padding:8px;background:var(--ice);border-bottom:1px solid var(--border)}
+.rich-toolbar button{min-width:34px;height:32px;padding:0 9px;border:1px solid var(--border);border-radius:4px;background:#fff;color:var(--storm);font-weight:700;font-size:13px}
+.rich-toolbar button:hover{background:var(--ice2);border-color:var(--border2)}
+.rich-editor{min-height:260px;padding:14px 16px;outline:none;font-family:var(--font-sans);font-size:16px;line-height:1.75}
+.rich-editor:empty::before{content:attr(data-placeholder);color:#8aa0ad;pointer-events:none}
+.rich-editor p{margin:0 0 1em}
+.rich-editor h2,.rich-editor h3{font-family:var(--font-serif);color:var(--storm);line-height:1.25;margin:1em 0 .45em}
+.rich-editor h2{font-size:24px}.rich-editor h3{font-size:20px}
+.rich-editor ul,.rich-editor ol{margin:0 0 1em 1.5em}
+.rich-editor blockquote{margin:1em 0;padding:10px 16px;border-left:4px solid var(--cyan);background:var(--ice)}
+.media-builder{display:grid;grid-template-columns:minmax(0,1fr) 120px 120px auto;gap:8px;align-items:center;margin-bottom:8px}
+.media-builder input,.media-builder select{min-width:0;width:100%;padding:9px 10px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans)}
+.article-inline-image{max-width:100%;height:auto;margin:6px 0 18px;border-radius:6px;box-shadow:var(--shadow)}
+.article-inline-image.float-left{float:left;width:min(42%,420px);margin:4px 24px 12px 0}
+.article-inline-image.float-right{float:right;width:min(42%,420px);margin:4px 0 12px 24px}
+.article-inline-clear{clear:both}
+.reader-body::after{content:"";display:block;clear:both}
+.reader-body .article-youtube{position:relative;width:100%;aspect-ratio:16/9;margin:28px 0;border-radius:8px;overflow:hidden;box-shadow:var(--shadow);background:#000}
+.reader-body .article-youtube iframe{width:100%;height:100%;border:0}
+.reader-body strong{font-weight:800}
+.reader-body h2,.reader-body h3{font-family:var(--font-serif);color:var(--storm);line-height:1.25;margin:1.3em 0 .55em}
+.reader-body h2{font-size:30px}.reader-body h3{font-size:24px}
+.reader-body ul,.reader-body ol{margin:0 0 1.3em 1.5em}
+.reader-body blockquote{margin:1.2em 0;padding:12px 18px;border-left:4px solid var(--cyan);background:var(--ice)}
+@media(max-width:700px){
+  .media-builder{grid-template-columns:1fr 1fr}
+  .media-builder input{grid-column:1/-1}
+  .article-inline-image.float-left,.article-inline-image.float-right{float:none;width:100%;margin:8px 0 20px}
+}
+
 /* RESPONSIVE */
 
 @media(max-width:900px){
@@ -1611,11 +1644,25 @@ main.reader-open>.content-wrapper{display:none}
 
         <label>Vsebina *</label>
 
-        <textarea
-          id="articleContent"
-          rows="9"
-          placeholder="Celotna vsebina…"
-        ></textarea>
+        <div class="rich-editor-wrap">
+          <div class="rich-toolbar" id="richToolbar">
+            <button type="button" onclick="formatEditor('bold')" title="Krepko"><strong>B</strong></button>
+            <button type="button" onclick="formatEditor('italic')" title="Ležeče"><em>I</em></button>
+            <button type="button" onclick="formatEditor('underline')" title="Podčrtano"><u>U</u></button>
+            <button type="button" onclick="formatEditor('formatBlock','H2')" title="Naslov 2">H2</button>
+            <button type="button" onclick="formatEditor('formatBlock','H3')" title="Naslov 3">H3</button>
+            <button type="button" onclick="formatEditor('insertUnorderedList')" title="Seznam">☷</button>
+            <button type="button" onclick="formatEditor('insertOrderedList')" title="Oštevilčen seznam">1.</button>
+            <button type="button" onclick="formatEditor('formatBlock','BLOCKQUOTE')" title="Citiranje">❝</button>
+            <button type="button" onclick="formatEditor('removeFormat')" title="Odstrani oblikovanje">Tx</button>
+            <button type="button" onclick="insertEditorLink()" title="Povezava">🔗</button>
+          </div>
+          <div id="articleContentEditor" class="rich-editor" contenteditable="true" spellcheck="true" data-placeholder="Prilepite ali napišite celotno vsebino…"></div>
+        </div>
+
+        <div class="form-hint">
+          Lahko neposredno prilepite besedilo iz ChatGPT. Krepko oblikovani naslovi se ohranijo. Podprti so tudi **Markdown** poudarki in osnovni naslovi.
+        </div>
 
       </div>
 
@@ -1661,6 +1708,20 @@ main.reader-open>.content-wrapper{display:none}
           Fotografije bodo prikazane v galeriji na koncu članka.
         </div>
 
+      </div>
+
+      <!-- SLIKE OB BESEDILU -->
+      <div class="form-group">
+        <label>Slike ob besedilu</label>
+        <div id="articleInlineImages"></div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="addInlineImageField()">+ Dodaj sliko ob besedilu</button>
+        <div class="form-hint">Vnesite Imgur URL, izberite velikost in levo/desno. Besedilo se bo samodejno ovilo okoli slike.</div>
+      </div>
+
+      <div class="form-group">
+        <label>YouTube video</label>
+        <input type="url" id="articleYoutube" placeholder="https://www.youtube.com/watch?v=… ali https://youtu.be/…">
+        <div class="form-hint">Video se prikaže v članku kot odziven YouTube predvajalnik.</div>
       </div>
 
     </div>
@@ -2617,6 +2678,18 @@ document.addEventListener(
     ).textContent=
       new Date().getFullYear();
 
+    const contentEditor=document.getElementById('articleContentEditor');
+    if(contentEditor){
+      contentEditor.addEventListener('paste',e=>{
+        const html=e.clipboardData?.getData('text/html')||'';
+        const text=e.clipboardData?.getData('text/plain')||'';
+        if(!html && text && (/\*\*/.test(text)||/^#{1,3}\s/m.test(text))){
+          e.preventDefault();
+          document.execCommand('insertHTML',false,normalizeRichText(text));
+        }
+      });
+    }
+
     document.getElementById(
       'btnNewArticle'
     ).addEventListener(
@@ -2697,8 +2770,8 @@ function loadLocalState(){
       );
 
     if(a){
-      STATE.articles=
-        JSON.parse(a);
+      STATE.articles=JSON.parse(a);
+      migrateArticles();
     }
 
   }catch(e){
@@ -2776,62 +2849,66 @@ function setDate(){
    NAVIGACIJA
 ============================================================ */
 
+function getArticleYear(article){
+  const d=new Date(article.date);
+  return isNaN(d)?null:d.getFullYear();
+}
+
+function getArchiveYears(){
+  const years=[...new Set(STATE.articles.map(getArticleYear).filter(y=>y!==null))];
+  const current=new Date().getFullYear();
+  if(!years.includes(current))years.push(current);
+  return years.sort((a,b)=>b-a);
+}
+
+function isArchiveCategory(cat){
+  return /^\d{4}$/.test(String(cat));
+}
+
+function getCurrentYear(){
+  return new Date().getFullYear();
+}
+
+function getArticlesForCategory(cat){
+  if(cat==='vse'){
+    const year=getCurrentYear();
+    return STATE.articles.filter(a=>getArticleYear(a)===year);
+  }
+  if(isArchiveCategory(cat)){
+    const year=Number(cat);
+    return STATE.articles.filter(a=>getArticleYear(a)===year);
+  }
+  return STATE.articles.filter(a=>a.category===cat);
+}
+
 function renderNav(){
 
-  const nav=
-    document.getElementById(
-      'navInner'
-    );
+  const nav=document.getElementById('navInner');
 
   nav.innerHTML=`
-
-    <div
-      class="nav-item ${
-        STATE.currentCategory==='vse'
-          ? 'active'
-          : ''
-      }"
-      data-cat="vse"
-      onclick="filterCategory('vse',this)"
-    >
-      🏠 Vse novice
+    <div class="nav-item ${STATE.currentCategory==='vse'?'active':''}" data-cat="vse" onclick="filterCategory('vse',this)">
+      🏠 ${getCurrentYear()} novice
     </div>
-
   `;
 
   STATE.categories.forEach(cat=>{
-
-    const d=
-      document.createElement('div');
-
-    d.className=
-      'nav-item'+
-      (
-        STATE.currentCategory===cat
-          ? ' active'
-          : ''
-      );
-
+    const d=document.createElement('div');
+    d.className='nav-item'+(STATE.currentCategory===cat?' active':'');
     d.dataset.cat=cat;
-
-    d.textContent=
-      catIcon(cat)+' '+cat;
-
-    d.onclick=function(){
-
-      filterCategory(
-        cat,
-        this
-      );
-
-    };
-
+    d.textContent=catIcon(cat)+' '+cat;
+    d.onclick=function(){filterCategory(cat,this);};
     nav.appendChild(d);
-
   });
 
+  getArchiveYears().filter(year=>year!==getCurrentYear()).forEach(year=>{
+    const d=document.createElement('div');
+    d.className='nav-item'+(String(STATE.currentCategory)===String(year)?' active':'');
+    d.dataset.cat=String(year);
+    d.textContent='🗓️ '+year;
+    d.onclick=function(){filterCategory(String(year),this);};
+    nav.appendChild(d);
+  });
 }
-
 
 /* ============================================================
    FILTRIRANJE
@@ -2839,78 +2916,46 @@ function renderNav(){
 
 function filterCategory(cat,el){
 
-  const rs=
-    document.getElementById(
-      'readerSection'
-    );
-
-  if(
-    rs &&
-    rs.classList.contains('open')
-  ){
-
+  const rs=document.getElementById('readerSection');
+  if(rs&&rs.classList.contains('open')){
     rs.classList.remove('open');
-
-    document
-      .querySelector('main')
-      .classList.remove(
-        'reader-open'
-      );
-
+    document.querySelector('main').classList.remove('reader-open');
   }
 
   STATE.currentCategory=cat;
 
-  document
-    .querySelectorAll('.nav-item')
-    .forEach(
-      n=>n.classList.remove('active')
-    );
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
 
   if(el){
-
     el.classList.add('active');
-
   }else{
-
-    const f=
-      document.querySelector(
-        `.nav-item[data-cat="${cssEscape(cat)}"]`
-      );
-
-    if(f){
-      f.classList.add('active');
-    }
-
+    const f=document.querySelector(`.nav-item[data-cat="${cssEscape(String(cat))}"]`);
+    if(f)f.classList.add('active');
   }
 
-  document.getElementById(
-    'sectionTitle'
-  ).textContent=
+  document.getElementById('sectionTitle').textContent=
     cat==='vse'
-      ? 'Najnovejše'
-      : cat;
+      ? `${getCurrentYear()} — najnovejše`
+      : (isArchiveCategory(cat)?`Arhiv ${cat}`:cat);
 
-  document.getElementById(
-    'heroSection'
-  ).style.display=
-    cat==='vse'
-      ? ''
-      : 'none';
+  document.getElementById('heroSection').style.display=cat==='vse'?'':'none';
 
-  window.scrollTo({
-    top:0,
-    behavior:'smooth'
-  });
-
+  window.scrollTo({top:0,behavior:'smooth'});
   renderArticles();
-
 }
-
 
 /* ============================================================
    NALOŽI ČLANKE
 ============================================================ */
+
+function migrateArticles(){
+  STATE.articles=STATE.articles.map(a=>({
+    ...a,
+    images:Array.isArray(a.images)?a.images:[],
+    inlineImages:Array.isArray(a.inlineImages)?a.inlineImages:[],
+    youtube:a.youtube||''
+  }));
+}
 
 async function loadArticles(){
 
@@ -2933,8 +2978,9 @@ async function loadArticles(){
 
       const j=await r.json();
 
-      STATE.articles=
-        j.articles||j;
+      STATE.articles=j.articles||j;
+      migrateArticles();
+      renderNav();
 
       saveLocalState();
 
@@ -2964,8 +3010,9 @@ async function loadArticles(){
 
         const j=await r.json();
 
-        STATE.articles=
-          j.articles||j;
+        STATE.articles=j.articles||j;
+        migrateArticles();
+        renderNav();
 
         saveLocalState();
 
@@ -3015,6 +3062,8 @@ async function loadArticles(){
               )
             )
           ).articles||[];
+        migrateArticles();
+        renderNav();
 
         saveLocalState();
 
@@ -3182,7 +3231,7 @@ function renderHero(){
   }
 
   const sorted=
-    [...STATE.articles]
+    getArticlesForCategory('vse')
       .sort(
         (a,b)=>
           new Date(b.date)-
@@ -3364,7 +3413,7 @@ function renderArticles(){
       .toLowerCase();
 
   let arts=
-  [...STATE.articles]
+  [...getArticlesForCategory(STATE.currentCategory)]
     .sort(
       (a,b)=>
         new Date(b.date)-
@@ -3385,19 +3434,6 @@ if(
     a=>a.id!==featured.id
   );
 }
-
-  if(
-    STATE.currentCategory!=='vse'
-  ){
-
-    arts=
-      arts.filter(
-        a=>
-          a.category===
-          STATE.currentCategory
-      );
-
-  }
 
   if(q){
 
@@ -3881,161 +3917,43 @@ function filterCategoryByName(name){
 
 function openReader(id){
 
-  const a=
-    STATE.articles.find(
-      x=>x.id===id
-    );
-
+  const a=STATE.articles.find(x=>String(x.id)===String(id));
   if(!a)return;
 
-  const adminBtns=
-    STATE.isAdmin
-
-    ?
-
-    `<div class="reader-admin">
-
-      <button
-        class="btn btn-outline"
-        onclick="openArticleEditor(${a.id})"
-      >
-        ✎ Uredi članek
-      </button>
-
-      <button
-        class="btn btn-danger"
-        onclick="confirmDelete(${a.id})"
-      >
-        ✕ Izbriši
-      </button>
-
-    </div>`
-
-    :
-
-    '';
-
-  document.getElementById(
-    'readerContent'
-  ).innerHTML=`
-
-    <div class="reader-category">
-
-      ${catIcon(a.category)}
-      ${esc(a.category)}
-
-    </div>
-
-    <h1 class="reader-title">
-      ${esc(a.title)}
-    </h1>
-
-    <div class="reader-meta">
-
-      <span>
-        ${esc(a.author||'Uredništvo')}
-      </span>
-
-      <span>·</span>
-
-      <span>
-        ${formatDate(a.date)}
-      </span>
-
-      <span>·</span>
-
-      <span>
-        ${readTime(a.content)} min branja
-      </span>
-
-    </div>
-
-    ${
-      a.image
-
-      ?
-
-      `<img
-        class="reader-image"
-        src="${esc(a.image)}"
-        alt="${esc(a.title)}"
-        loading="lazy"
-      >`
-
-      :
-
-      ''
-    }
-
-    <div class="reader-body">
-      ${formatContent(a.content||'')}
-    </div>
-
-    ${
-      a.images && a.images.length
-
-      ?
-
-      `<div class="reader-gallery">
-
-        <div class="reader-gallery-title">
-          Fotogalerija
-        </div>
-
-        <div class="reader-gallery-grid">
-
-          ${
-            a.images
-              .filter(Boolean)
-              .map(
-                (image,index)=>`
-
-                  <div class="reader-gallery-item">
-
-                    <img
-                      src="${esc(image)}"
-                      alt="${esc(a.title)} — fotografija ${index+1}"
-                      loading="lazy"
-                    >
-
-                  </div>
-
-                `
-              )
-              .join('')
-          }
-
-        </div>
-
+  const adminBtns=STATE.isAdmin
+    ? `<div class="reader-admin">
+        <button class="btn btn-outline" onclick="openArticleEditor(${a.id})">✎ Uredi članek</button>
+        <button class="btn btn-danger" onclick="confirmDelete(${a.id})">✕ Izbriši</button>
       </div>`
+    : '';
 
-      :
-
-      ''
-    }
-
+  document.getElementById('readerContent').innerHTML=`
+    <div class="reader-category">${catIcon(a.category)} ${esc(a.category)}</div>
+    <h1 class="reader-title">${esc(a.title)}</h1>
+    <div class="reader-meta">
+      <span>${esc(a.author||'Uredništvo')}</span><span>·</span>
+      <span>${formatDate(a.date)}</span><span>·</span>
+      <span>${readTime(a.content)} min branja</span>
+    </div>
+    ${a.image ? `<img class="reader-image" src="${safeUrl(a.image)}" alt="${esc(a.title)}" loading="lazy">` : ''}
+    <div class="reader-body">${renderArticleContent(a)}</div>
+    ${a.images && a.images.length ? `
+      <div class="reader-gallery">
+        <div class="reader-gallery-title">Fotogalerija</div>
+        <div class="reader-gallery-grid">
+          ${a.images.filter(Boolean).map((image,index)=>`
+            <div class="reader-gallery-item">
+              <img src="${safeUrl(image)}" alt="${esc(a.title)} — fotografija ${index+1}" loading="lazy">
+            </div>`).join('')}
+        </div>
+      </div>` : ''}
     ${adminBtns}
-
   `;
 
-  document.getElementById(
-    'readerCrumbCat'
-  ).textContent=
-    catIcon(a.category)+' '+a.category;
-
-  document.getElementById(
-    'readerSection'
-  ).classList.add('open');
-
-  document
-    .querySelector('main')
-    .classList.add('reader-open');
-
-  window.scrollTo({
-    top:0,
-    behavior:'smooth'
-  });
-
+  document.getElementById('readerCrumbCat').textContent=catIcon(a.category)+' '+a.category;
+  document.getElementById('readerSection').classList.add('open');
+  document.querySelector('main').classList.add('reader-open');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 
@@ -4069,63 +3987,69 @@ function closeReader(){
 
 function addArticleImageField(value=''){
 
-  const container=
-    document.getElementById(
-      'articleImages'
-    );
-
-  const row=
-    document.createElement(
-      'div'
-    );
-
+  const container=document.getElementById('articleImages');
+  const row=document.createElement('div');
   row.style.display='flex';
   row.style.gap='8px';
   row.style.alignItems='center';
 
   row.innerHTML=`
-
-    <input
-      type="url"
-      class="article-extra-image"
-      placeholder="https://…"
-      value="${esc(value)}"
-      style="flex:1"
-    >
-
-    <button
-      type="button"
-      class="btn btn-danger btn-sm"
-      onclick="this.parentElement.remove()"
-      title="Odstrani fotografijo"
-    >
-      ✕
-    </button>
-
+    <input type="url" class="article-extra-image" placeholder="https://i.imgur.com/…" value="${esc(value)}" style="flex:1">
+    <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()" title="Odstrani fotografijo">✕</button>
   `;
-
   container.appendChild(row);
-
 }
 
-
-/* ============================================================
-   PRIDOBI DODATNE FOTOGRAFIJE
-============================================================ */
-
 function getArticleImages(){
+  return [...document.querySelectorAll('.article-extra-image')]
+    .map(input=>input.value.trim()).filter(Boolean);
+}
 
-  return[
-    ...document.querySelectorAll(
-      '.article-extra-image'
-    )
-  ]
-    .map(
-      input=>
-        input.value.trim()
-    )
-    .filter(Boolean);
+function addInlineImageField(data={}){
 
+  const container=document.getElementById('articleInlineImages');
+  const row=document.createElement('div');
+  row.className='media-builder';
+
+  const item={url:data.url||'',width:data.width||'medium',side:data.side||'right'};
+
+  row.innerHTML=`
+    <input type="url" class="article-inline-url" placeholder="https://i.imgur.com/…" value="${esc(item.url)}">
+    <select class="article-inline-width">
+      <option value="small" ${item.width==='small'?'selected':''}>Majhna</option>
+      <option value="medium" ${item.width==='medium'?'selected':''}>Srednja</option>
+      <option value="large" ${item.width==='large'?'selected':''}>Velika</option>
+    </select>
+    <select class="article-inline-side">
+      <option value="left" ${item.side==='left'?'selected':''}>Levo</option>
+      <option value="right" ${item.side==='right'?'selected':''}>Desno</option>
+    </select>
+    <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">✕</button>
+  `;
+  container.appendChild(row);
+}
+
+function getInlineImages(){
+  return [...document.querySelectorAll('#articleInlineImages .media-builder')]
+    .map(row=>({
+      url:row.querySelector('.article-inline-url')?.value.trim()||'',
+      width:row.querySelector('.article-inline-width')?.value||'medium',
+      side:row.querySelector('.article-inline-side')?.value||'right'
+    }))
+    .filter(x=>x.url);
+}
+
+function getYoutubeId(url){
+  const value=String(url||'').trim();
+  const m=value.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+  return m?m[1]:'';
+}
+
+function youtubeEmbed(url){
+  const id=getYoutubeId(url);
+  return id
+    ? `<div class="article-youtube"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}" title="YouTube video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`
+    : '';
 }
 
 
@@ -4186,9 +4110,7 @@ function openArticleEditor(id=null){
       'articleExcerpt'
     ).value=a.excerpt||'';
 
-    document.getElementById(
-      'articleContent'
-    ).value=a.content||'';
+    setEditorContent(a.content||'');
 
     document.getElementById(
       'articleImage'
@@ -4207,6 +4129,10 @@ function openArticleEditor(id=null){
       image=>
         addArticleImageField(image)
     );
+
+    document.getElementById('articleInlineImages').innerHTML='';
+    (a.inlineImages||[]).forEach(image=>addInlineImageField(image));
+    document.getElementById('articleYoutube').value=a.youtube||'';
 
     document.getElementById(
       'btnSaveArticle'
@@ -4228,12 +4154,15 @@ function openArticleEditor(id=null){
       'articleTitle',
       'articleAuthor',
       'articleExcerpt',
-      'articleContent',
       'articleImage'
     ].forEach(
       i=>
         document.getElementById(i).value=''
     );
+
+    setEditorContent('');
+    document.getElementById('articleYoutube').value='';
+    document.getElementById('articleInlineImages').innerHTML='';
 
     /* POČISTI DODATNE FOTOGRAFIJE */
 
@@ -4266,15 +4195,10 @@ async function saveArticle(){
       'articleTitle'
     ).value.trim();
 
-  const content=
-    document.getElementById(
-      'articleContent'
-    ).value.trim();
-
-  /* PRIDOBI DODATNE FOTOGRAFIJE */
-
-  const images=
-    getArticleImages();
+  const content=getEditorContent();
+  const images=getArticleImages();
+  const inlineImages=getInlineImages();
+  const youtube=document.getElementById('articleYoutube').value.trim();
 
   if(!title){
 
@@ -4352,8 +4276,13 @@ async function saveArticle(){
       ).value.trim(),
 
     /* DODATNE FOTOGRAFIJE */
-
     images,
+
+    /* SLIKE OB BESEDILU */
+    inlineImages,
+
+    /* YOUTUBE */
+    youtube,
 
     date:
       editingId
@@ -5072,17 +5001,14 @@ function formatDate(iso){
 ============================================================ */
 
 function readTime(t){
-
+  const plain=document.createElement('div');
+  plain.innerHTML=String(t||'');
   return Math.max(
     1,
     Math.round(
-      (t||'')
-        .split(' ')
-        .length/
-        200
+      (plain.textContent||'').trim().split(/\s+/).filter(Boolean).length/200
     )
   );
-
 }
 
 
@@ -5090,17 +5016,124 @@ function readTime(t){
    VSEBINA
 ============================================================ */
 
+function normalizeRichText(text){
+
+  const raw=String(text||'').trim();
+  if(!raw)return '';
+
+  if(!/<[a-z][\s\S]*>/i.test(raw)){
+    let html=esc(raw)
+      .replace(/\r\n/g,'\n')
+      .replace(/\r/g,'\n')
+      .replace(/^###\s+(.+)$/gm,'<h3>$1</h3>')
+      .replace(/^##\s+(.+)$/gm,'<h2>$1</h2>')
+      .replace(/^#\s+(.+)$/gm,'<h2>$1</h2>')
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+      .replace(/__(.+?)__/g,'<strong>$1</strong>')
+      .replace(/\*([^*\n]+)\*/g,'<em>$1</em>')
+      .replace(/_([^_\n]+)_/g,'<em>$1</em>');
+
+    return html.split(/\n{2,}/).map(block=>{
+      block=block.trim();
+      if(!block)return '';
+      if(/^<h[23]>/.test(block))return block;
+      return '<p>'+block.replace(/\n/g,'<br>')+'</p>';
+    }).join('');
+  }
+
+  return raw;
+}
+
+function sanitizeRichHtml(html){
+
+  const template=document.createElement('template');
+  template.innerHTML=normalizeRichText(html);
+
+  const allowedTags=new Set(['P','BR','STRONG','B','EM','I','U','H2','H3','UL','OL','LI','BLOCKQUOTE','A']);
+
+  const walk=node=>{
+    [...node.childNodes].forEach(child=>{
+      if(child.nodeType===Node.ELEMENT_NODE){
+        const el=child;
+
+        if(!allowedTags.has(el.tagName)){
+          while(el.firstChild)node.insertBefore(el.firstChild,el);
+          el.remove();
+          return;
+        }
+
+        [...el.attributes].forEach(attr=>el.removeAttribute(attr.name));
+
+        if(el.tagName==='A'){
+          const href=el.getAttribute('href');
+          if(!href || !/^https?:\/\//i.test(href)){
+            el.removeAttribute('href');
+          }else{
+            el.setAttribute('target','_blank');
+            el.setAttribute('rel','noopener noreferrer');
+          }
+        }
+
+        walk(el);
+      }else if(child.nodeType===Node.COMMENT_NODE){
+        child.remove();
+      }
+    });
+  };
+
+  walk(template.content);
+  return template.innerHTML.trim();
+}
+
+function setEditorContent(content){
+  const editor=document.getElementById('articleContentEditor');
+  if(editor)editor.innerHTML=sanitizeRichHtml(content||'');
+}
+
+function getEditorContent(){
+  const editor=document.getElementById('articleContentEditor');
+  return sanitizeRichHtml(editor?.innerHTML||'');
+}
+
+function formatEditor(command,value=null){
+  const editor=document.getElementById('articleContentEditor');
+  if(!editor)return;
+  editor.focus();
+  document.execCommand(command,false,value);
+}
+
+function insertEditorLink(){
+  const url=prompt('Vnesite URL povezave:','https://');
+  if(url && /^https?:\/\//i.test(url))formatEditor('createLink',url.trim());
+}
+
+function safeUrl(url){
+  const value=String(url||'').trim();
+  return /^https?:\/\//i.test(value)?esc(value):'';
+}
+
+function renderInlineImage(image){
+  const url=safeUrl(image.url);
+  if(!url)return '';
+  const width={small:'28%',medium:'40%',large:'52%'}[image.width||'medium']||'40%';
+  const side=image.side==='left'?'left':'right';
+  return `<img class="article-inline-image float-${side}" src="${url}" alt="" loading="lazy" style="width:min(${width},520px)">`;
+}
+
+function renderArticleContent(a){
+  let html=sanitizeRichHtml(a.content||'');
+  const inline=(a.inlineImages||[]).filter(x=>x&&x.url);
+
+  if(inline.length){
+    html=inline.map(renderInlineImage).join('')+html+'<div class="article-inline-clear"></div>';
+  }
+
+  if(a.youtube)html+=youtubeEmbed(a.youtube);
+  return html||normalizeRichText(a.content||'');
+}
+
 function formatContent(text){
-
-  return text
-    .split('\n')
-    .filter(Boolean)
-    .map(
-      p=>
-        `<p>${esc(p)}</p>`
-    )
-    .join('');
-
+  return normalizeRichText(text);
 }
 
 </script>
