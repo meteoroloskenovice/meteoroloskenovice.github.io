@@ -2996,120 +2996,85 @@ function migrateArticles(){
   }));
 }
 
+// Kje so članki na GitHubu. Nastavitve (žeton, repozitorij) so shranjene samo v brskalniku
+// računalnika, kjer je bil vnesen žeton. Na drugih računalnikih jih ni, zato se pri strani na
+// github.io lastnik in repozitorij prebereta iz naslova strani.
+function getGhSource(){
+  const st=STATE.settings||{};
+  let owner=st.ghOwner,repo=st.ghRepo;
+  if((!owner||!repo)&&/\.github\.io$/i.test(location.hostname)){
+    owner=location.hostname.split('.')[0];
+    const seg=location.pathname.split('/').filter(Boolean)[0];
+    repo=(seg&&!/\.html?$/i.test(seg))?seg:owner+'.github.io';
+  }
+  return{
+    owner,
+    repo,
+    branch:st.ghBranch||'main',
+    path:st.ghFilePath||'articles.json'
+  };
+}
+
+function applyLoadedArticles(j){
+  STATE.articles=j.articles||j;
+  migrateArticles();
+  renderNav();
+  saveLocalState();
+  renderHero();
+  renderArticles();
+  renderSidebar();
+}
+
 async function loadArticles(){
 
-  const{
-    ghOwner,
-    ghRepo,
-    ghFilePath,
-    ghBranch,
-    ghToken
-  }=STATE.settings;
+  const src=getGhSource();
+  const{ghToken}=STATE.settings;
 
-  try{
-
-    const r=await fetch(
-      ghFilePath||'articles.json',
-      {cache:'no-store'}
-    );
-
-    if(r.ok){
-
-      const j=await r.json();
-
-      STATE.articles=j.articles||j;
-      migrateArticles();
-      renderNav();
-
-      saveLocalState();
-
-      renderHero();
-      renderArticles();
-      renderSidebar();
-
-      return;
-
-    }
-
-  }catch(e){}
-
-  if(
-    ghOwner &&
-    ghRepo &&
-    ghFilePath
-  ){
-
+  // 1) neposredno z GitHuba (vedno sveže, brez predpomnilnika)
+  if(src.owner&&src.repo){
     try{
-
       const r=await fetch(
-        `https://raw.githubusercontent.com/${ghOwner}/${ghRepo}/${ghBranch||'main'}/${ghFilePath}?t=${Date.now()}`
+        `https://raw.githubusercontent.com/${src.owner}/${src.repo}/${src.branch}/${src.path}?t=${Date.now()}`,
+        {cache:'no-store'}
       );
-
       if(r.ok){
-
-        const j=await r.json();
-
-        STATE.articles=j.articles||j;
-        migrateArticles();
-        renderNav();
-
-        saveLocalState();
-
-        renderHero();
-        renderArticles();
-        renderSidebar();
-
+        applyLoadedArticles(await r.json());
         return;
-
       }
-
     }catch(e){}
-
   }
 
-  if(
-    ghOwner &&
-    ghRepo &&
-    ghFilePath &&
-    ghToken
-  ){
+  // 2) datoteka na istem strežniku kot stran
+  try{
+    const r=await fetch(src.path,{cache:'no-store'});
+    if(r.ok){
+      applyLoadedArticles(await r.json());
+      return;
+    }
+  }catch(e){}
 
+  // 3) GitHub API z žetonom (za zasebne repozitorije)
+  if(src.owner&&src.repo&&ghToken){
     try{
-
       const r=await fetch(
-        `https://api.github.com/repos/${ghOwner}/${ghRepo}/contents/${ghFilePath}?ref=${ghBranch||'main'}`,
+        `https://api.github.com/repos/${src.owner}/${src.repo}/contents/${src.path}?ref=${src.branch}`,
         {
+          cache:'no-store',
           headers:{
-            Authorization:
-              `token ${ghToken}`,
-            Accept:
-              'application/vnd.github.v3+json'
+            Authorization:`token ${ghToken}`,
+            Accept:'application/vnd.github.v3+json'
           }
         }
       );
-
       if(r.ok){
-
         const j=await r.json();
-
-        STATE.articles=
-          JSON.parse(
-            atob(
-              j.content.replace(
-                /\s/g,
-                ''
-              )
-            )
-          ).articles||[];
+        const bytes=Uint8Array.from(atob(j.content.replace(/\s/g,'')),c=>c.charCodeAt(0));
+        STATE.articles=JSON.parse(new TextDecoder('utf-8').decode(bytes)).articles||[];
         migrateArticles();
         renderNav();
-
         saveLocalState();
-
       }
-
     }catch(e){}
-
   }
 
   renderHero();
@@ -3150,103 +3115,96 @@ async function refreshArticles(){
    GITHUB
 ============================================================ */
 
+let GH_LAST_ERROR='';
+
 async function saveToGitHub(){
 
-  const{
-    ghToken,
-    ghOwner,
-    ghRepo,
-    ghFilePath,
-    ghBranch
-  }=STATE.settings;
+  GH_LAST_ERROR='';
 
-  if(
-    !ghToken||
-    !ghOwner||
-    !ghRepo
-  ){
+  const{ghToken}=STATE.settings;
+  const src=getGhSource();
+
+  if(!ghToken||!src.owner||!src.repo){
+    GH_LAST_ERROR='manjka GitHub žeton, lastnik ali repozitorij (Nastavitve → GitHub integracija)';
     return false;
   }
 
-  let sha=null;
-
-  try{
-
-    const r=await fetch(
-      `https://api.github.com/repos/${ghOwner}/${ghRepo}/contents/${ghFilePath}?ref=${ghBranch||'main'}`,
-      {
-        headers:{
-          Authorization:
-            `token ${ghToken}`,
-          Accept:
-            'application/vnd.github.v3+json'
-        }
-      }
-    );
-
-    if(r.ok){
-
-      const j=await r.json();
-      sha=j.sha;
-
-    }
-
-  }catch(e){}
+  const apiUrl=`https://api.github.com/repos/${src.owner}/${src.repo}/contents/${src.path}`;
+  const headers={
+    Authorization:`token ${ghToken}`,
+    Accept:'application/vnd.github.v3+json'
+  };
 
   const content=
     btoa(
       unescape(
         encodeURIComponent(
-          JSON.stringify(
-            {
-              articles:
-                STATE.articles
-            },
-            null,
-            2
-          )
+          JSON.stringify({articles:STATE.articles},null,2)
         )
       )
     );
 
-  const body={
+  // dva poskusa: če se datoteka med tem spremeni (409), znova preberemo sha
+  for(let attempt=0;attempt<2;attempt++){
 
-    message:
-      `Meteorološke Novice — ${new Date().toLocaleString('sl-SI')}`,
+    let sha=null;
 
-    content,
+    try{
+      const r=await fetch(`${apiUrl}?ref=${src.branch}`,{headers,cache:'no-store'});
+      if(r.ok){
+        sha=(await r.json()).sha;
+      }else if(r.status===401){
+        GH_LAST_ERROR='žeton je neveljaven ali potekel (401)';
+        return false;
+      }else if(r.status!==404){
+        const j=await r.json().catch(()=>({}));
+        GH_LAST_ERROR=`GitHub: ${r.status} ${j.message||''}`.trim();
+        return false;
+      }
+      // 404 = datoteka še ne obstaja, ustvarimo jo
+    }catch(e){
+      GH_LAST_ERROR='ni povezave z GitHubom (internet ali blokada)';
+      return false;
+    }
 
-    branch:
-      ghBranch||'main'
+    const body={
+      message:`Meteorološke Novice — ${new Date().toLocaleString('sl-SI')}`,
+      content,
+      branch:src.branch
+    };
+    if(sha)body.sha=sha;
 
-  };
+    let res;
+    try{
+      res=await fetch(apiUrl,{
+        method:'PUT',
+        headers:{...headers,'Content-Type':'application/json'},
+        body:JSON.stringify(body)
+      });
+    }catch(e){
+      GH_LAST_ERROR='ni povezave z GitHubom (internet ali blokada)';
+      return false;
+    }
 
-  if(sha){
-    body.sha=sha;
+    if(res.ok)return true;
+
+    if(res.status===409&&attempt===0)continue;
+
+    const j=await res.json().catch(()=>({}));
+    if(res.status===401){
+      GH_LAST_ERROR='žeton je neveljaven ali potekel (401)';
+    }else if(res.status===403){
+      GH_LAST_ERROR='žeton nima pravice pisanja (potrebna je pravica Contents: Read and write) (403)';
+    }else if(res.status===404){
+      GH_LAST_ERROR=`repozitorij "${src.owner}/${src.repo}" ali veja "${src.branch}" ni najden, ali žeton nima dostopa do njega (404)`;
+    }else{
+      GH_LAST_ERROR=`GitHub: ${res.status} ${j.message||''}`.trim();
+    }
+    return false;
+
   }
 
-  const res=await fetch(
-    `https://api.github.com/repos/${ghOwner}/${ghRepo}/contents/${ghFilePath}`,
-    {
-      method:'PUT',
-
-      headers:{
-        Authorization:
-          `token ${ghToken}`,
-
-        'Content-Type':
-          'application/json',
-
-        Accept:
-          'application/vnd.github.v3+json'
-      },
-
-      body:
-        JSON.stringify(body)
-    }
-  );
-
-  return res.ok;
+  return false;
 
 }
 
@@ -4368,7 +4326,7 @@ async function saveArticle(){
 
     ghOk
       ? 'Članek objavljen na GitHub! ✓'
-      : 'Shranjeno lokalno (GitHub ni konfiguriran)',
+      : 'Shranjeno samo v tem brskalniku, NI na GitHubu: '+(GH_LAST_ERROR||'neznana napaka'),
 
     ghOk
       ? 'success'
@@ -4402,8 +4360,9 @@ function confirmDelete(id){
 
       saveLocalState();
 
+      let delOk=false;
       try{
-        await saveToGitHub();
+        delOk=await saveToGitHub();
       }catch(e){}
 
       closeModal(
@@ -4415,8 +4374,10 @@ function confirmDelete(id){
       renderSidebar();
 
       toast(
-        'Članek izbrisan.',
-        'success'
+        delOk
+          ? 'Članek izbrisan.'
+          : 'Izbrisano samo v tem brskalniku, NI na GitHubu: '+(GH_LAST_ERROR||'neznana napaka'),
+        delOk?'success':'error'
       );
 
     };
